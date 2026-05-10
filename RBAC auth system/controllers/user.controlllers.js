@@ -1,5 +1,8 @@
+const config = require("../config/config");
+const blacklistModel = require("../models/blackList.model");
 const userModel = require("../models/user.model");
 const { genAccessToken, genRefreshToken } = require("../utils/generateToken");
+const jwt = require("jsonwebtoken")
 
 const registerController = async (req, res) => {
   try {
@@ -83,12 +86,72 @@ const loginController = async (req, res) => {
       user: user,
       accessToken: accessToken,
     });
-
   } catch (error) {
     return res.status(500).json({ message: error.message, success: false });
   }
 };
 
+const profileController = async (req, res) => {
+  try {
+    res.status(200).json({
+      message: "User fetched successfully",
+      success: true,
+      user: req.user,
+    });
+  } catch (error) {
+    return res.status(500).json({ message: error.message, success: false });
+  }
+};
 
+const refreshTokenController = async (req, res) => {
+  try {
+    const refreshToken = req.cookies.refreshToken;
 
-module.exports = { registerController , loginController };
+    if (!refreshToken) {
+      return res.status(401).json({
+        message: "Refresh token missing",
+        success: false,
+      });
+    }
+
+    const decoded = jwt.verify(refreshToken, config.JWT_REFRESH_SECRET_KEY);
+    const accessToken = genAccessToken(decoded.userId);
+
+    return res.status(200).json({
+      message: "Access token refreshed",
+      success: true,
+      accessToken,
+    });
+  } catch (error) {
+    return res.status(500).json({ message: error.message, success: false });
+  }
+};
+
+const logoutController = async (req, res) => {
+  try {
+    const accessToken = req.headers.authorization?.split(" ")[1];
+
+    await blacklistModel.create({ token: accessToken });
+
+    res.clearCookie("refreshToken", {
+      httpOnly: true,
+      secure: false,
+      sameSite: "strict",
+    });
+
+    return res.status(200).json({
+      message: "User logged out successfully",
+      success: true,
+    });
+  } catch (error) {
+    return res.status(500).json({ message: error.message, success: false });
+  }
+};
+
+module.exports = {
+  registerController,
+  loginController,
+  profileController,
+  logoutController,
+  refreshTokenController
+};

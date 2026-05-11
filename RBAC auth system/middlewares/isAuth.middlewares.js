@@ -44,4 +44,28 @@ const isAuth = async (req, res, next) => {
   }
 };
 
-module.exports = { isAuth };
+// middleware/authorizeRole.js
+const authorizeRole = (...allowedRoles) => {
+  return (req, res, next) => {
+    // req.user is set by isAuth middleware
+    // so isAuth must always run before authorizeRole
+    if (!req.user) {
+      return res.status(401).json({
+        message: "Unauthorized — please login first",
+        success: false,
+      });
+    }
+
+    // check if user's role is in the allowed roles list
+    if (!allowedRoles.includes(req.user.role)) {
+      return res.status(403).json({
+        message: `Access denied — required role: ${allowedRoles.join(" or ")}`,
+        success: false,
+      });
+    }
+
+    next();
+  };
+};
+
+module.exports = { isAuth, authorizeRole };

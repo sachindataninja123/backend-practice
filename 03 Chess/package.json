@@ -2,7 +2,7 @@
   "name": "03-chess",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,6 +11,11 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "express": "^5.2.1"
+    "chess": "^1.5.1",
+    "chess.js": "^1.4.0",
+    "ejs": "^5.0.2",
+    "express": "^5.2.1",
+    "http": "^0.0.1-security",
+    "socket.io": "^4.8.3"
   }
 }

@@ -92,4 +92,4 @@ const deleteNote = async (req, res) => {
   }
 };
 
-module.exports = { createNotes, getAllNotes, updateNotes , deleteNote };
+module.exports = { createNotes, getAllNotes, updateNotes, deleteNote };

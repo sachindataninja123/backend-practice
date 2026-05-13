@@ -31,7 +31,7 @@ transition-all duration-300  w-[86%] m-auto text-white px-10 py-3 mt-3 rounded-4
           </NavLink>
 
           <NavLink
-            to="/create-note"
+            to="/create-notes"
             className={({ isActive }) =>
               `transition duration-200 hover:text-yellow-400 ${
                 isActive ? "text-yellow-400" : ""
@@ -39,6 +39,17 @@ transition-all duration-300  w-[86%] m-auto text-white px-10 py-3 mt-3 rounded-4
             }
           >
             Create Note
+          </NavLink>
+
+          <NavLink
+            to="/notes-history"
+            className={({ isActive }) =>
+              `transition duration-200 hover:text-yellow-400 ${
+                isActive ? "text-yellow-400" : ""
+              }`
+            }
+          >
+            Notes History
           </NavLink>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { NotesContext } from "../../context/notesContext";
+import { FaPlus } from "react-icons/fa";
 
 const Home = () => {
   const { notes, getAllNotes } = useContext(NotesContext);
@@ -37,15 +38,15 @@ const Home = () => {
             {/* Buttons */}
             <div className="flex flex-wrap gap-4 mt-8">
               <Link
-                to="/create-note"
-                className="bg-[#38bdf8] hover:bg-[#0ea5e9] text-black font-semibold px-7 py-3 rounded-2xl transition duration-300 shadow-lg"
+                to="/create-notes"
+                className="bg-[#38bdf8] hover:bg-[#0ea5e9] text-black font-semibold px-7 py-3 rounded-xl transition duration-300 shadow-lg"
               >
                 Create Note
               </Link>
 
               <Link
-                to="/"
-                className="border border-gray-700 hover:border-[#38bdf8] hover:text-[#38bdf8] px-7 py-3 rounded-2xl transition duration-300"
+                to="/notes-history"
+                className="border border-gray-700 hover:border-[#38bdf8] hover:text-[#38bdf8] px-7 py-3 rounded-xl transition duration-300"
               >
                 Explore Notes
               </Link>
@@ -62,29 +63,30 @@ backdrop-blur-xl
 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_0_30px_rgba(255,255,255,0.04)] 
 hover:border-gray-600 
 hover:shadow-[0_0_40px_rgba(255,255,255,0.08)] 
-transition-all duration-300  rounded-3xl p-8 "
+transition-all duration-300  rounded-xl p-6 "
             >
-              <div className="flex items-center gap-2 mb-6">
-                <div className="w-3 h-3 bg-red-400 rounded-full"></div>
-                <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
-                <div className="w-3 h-3 bg-green-400 rounded-full"></div>
+              <div className="flex items-center justify-between gap-2 mb-4">
+                <div className="flex gap-2 items-center justify-center">
+                  <div className="w-3 h-3 bg-red-400 rounded-full"></div>
+                  <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                  <div className="w-3 h-3 bg-green-400 rounded-full"></div>
+                </div>
+                <Link
+                  to="/create-notes"
+                  className="group flex items-center justify-center
+                           w-9 h-9 rounded-xl
+                           bg-cyan-500/10 border border-cyan-500/20
+                           hover:bg-cyan-500 hover:border-cyan-500
+                           transition-all duration-300
+                           hover:scale-110 cursor-pointer"
+                >
+                  <FaPlus
+                    className="text-xl text-cyan-400
+                             group-hover:text-white transition-all duration-300"
+                  />
+                </Link>
               </div>
 
-              <Link
-                to="/create-note"
-                className="absolute top-4 right-8 w-8 h-8 rounded-full 
-  bg-linear-to-br from-[#0d232c] to-[#113545]
-  flex items-center justify-center
-  text-white text-2xl font-semibold
-  cursor-pointer
-  shadow-lg shadow-cyan-500/30
-  hover:scale-110 
-  transition-all duration-300
-  border border-white/10
-  backdrop-blur-md"
-              >
-                +
-              </Link>
               {notes.length > 0 ? (
                 [...notes]
                   .reverse()

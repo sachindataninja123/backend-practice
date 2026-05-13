@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import CreateNote from "./pages/CreateNote";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import NotesHistory from "./pages/NotesHistory";
 
 const App = () => {
   return (
@@ -13,7 +14,8 @@ const App = () => {
       <main className="flex-1">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/create-note" element={<CreateNote />} />
+          <Route path="/create-notes" element={<CreateNote />} />
+          <Route path="/notes-history" element={<NotesHistory />} />
         </Routes>
       </main>
 

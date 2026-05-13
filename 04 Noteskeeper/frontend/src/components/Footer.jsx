@@ -33,7 +33,7 @@ transition-all duration-300  rounded-3xl p-1 w-[88%] mb-5 m-auto text-white ">
           </Link>
 
           <Link
-            to="/create-note"
+            to="/create-notes"
             className="hover:text-[#38bdf8] transition duration-300"
           >
             Create Note

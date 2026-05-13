@@ -36,7 +36,7 @@ const getAllNotes = async (req, res) => {
 
     return res.status(200).json({
       message: "Notes fetched successfully",
-      notes: { notes },
+      notes: notes,
     });
   } catch (error) {
     return res.status(500).json({ message: error.message, success: false });

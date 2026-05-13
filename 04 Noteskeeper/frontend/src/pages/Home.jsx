@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { NotesContext } from "../../context/notesContext";
 
 const Home = () => {
+  const { notes, getAllNotes } = useContext(NotesContext);
+
+  console.log(notes);
+
+  useEffect(() => {
+    getAllNotes();
+  }, [getAllNotes]);
+
   return (
     <div className=" bg-[#0f172a] text-white overflow-hidden">
       {/* Hero Section */}
@@ -61,32 +70,59 @@ transition-all duration-300  rounded-3xl p-8 "
                 <div className="w-3 h-3 bg-green-400 rounded-full"></div>
               </div>
 
-              <div className="space-y-4">
-                <div className="bg-[#0f172a] p-4 rounded-2xl">
-                  <h3 className="font-semibold text-[#38bdf8]">
-                    Project Ideas
-                  </h3>
-                  <p className="text-gray-400 text-sm mt-2">
-                    Build a full-stack notes app using MERN stack.
-                  </p>
-                </div>
+              <Link
+                to="/create-note"
+                className="absolute top-4 right-8 w-8 h-8 rounded-full 
+  bg-linear-to-br from-[#0d232c] to-[#113545]
+  flex items-center justify-center
+  text-white text-2xl font-semibold
+  cursor-pointer
+  shadow-lg shadow-cyan-500/30
+  hover:scale-110 
+  transition-all duration-300
+  border border-white/10
+  backdrop-blur-md"
+              >
+                +
+              </Link>
+              {notes.length > 0 ? (
+                [...notes]
+                  .reverse()
+                  .slice(0, 3)
+                  .map((note) => {
+                    return (
+                      <div key={note._id} className="space-y-4 mt-3">
+                        <div
+                          className="bg-[#0f172a] p-4 rounded-xl border border-gray-800
+            hover:border-[#38bdf8]/40 transition-all duration-300"
+                        >
+                          <h3 className="font-semibold text-[#38bdf8]">
+                            {note.title}
+                          </h3>
 
-                <div className="bg-[#0f172a] p-4 rounded-2xl">
-                  <h3 className="font-semibold text-[#38bdf8]">Daily Tasks</h3>
-                  <p className="text-gray-400 text-sm mt-2">
-                    Complete backend authentication APIs.
-                  </p>
-                </div>
+                          <p className="text-gray-400 text-sm mt-2">
+                            {note.content}
+                          </p>
 
-                <div className="bg-[#0f172a] p-4 rounded-2xl">
-                  <h3 className="font-semibold text-[#38bdf8]">
-                    Learning Goals
-                  </h3>
-                  <p className="text-gray-400 text-sm mt-2">
-                    Learn MongoDB relationships and JWT auth.
-                  </p>
+                          {/* Date & Time */}
+                          <div className="flex items-center justify-between mt-5">
+                            <span className="text-xs text-gray-500">
+                              {new Date(note.createdAt).toLocaleDateString()}
+                            </span>
+
+                            <span className="text-xs text-[#38bdf8]">
+                              {new Date(note.createdAt).toLocaleTimeString()}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })
+              ) : (
+                <div className="text-gray-500 text-center py-10">
+                  No notes right now, create one 🚀
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>

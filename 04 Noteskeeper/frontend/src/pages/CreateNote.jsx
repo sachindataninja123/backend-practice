@@ -35,7 +35,7 @@ const CreateNote = () => {
 
       <div className="absolute bottom-10 right-10 w-72 h-72 bg-blue-500/10 blur-3xl rounded-full"></div>
 
-      <div className="md:w-[90%] m-auto h-full flex flex-col md:flex-row items-start justify-between gap-9">
+      <div className="md:w-[90%] m-auto h-full flex flex-col md:flex-row items-center justify-between gap-9">
         {/* Form Container */}
         <div className="max-w-2xl md:w-1/2 mx-auto relative z-10">
           {/* Heading */}
@@ -53,7 +53,7 @@ const CreateNote = () => {
           {/* Form Card */}
           <div
             className="bg-[#1e293b]/80 backdrop-blur-xl border border-gray-800 
-          rounded-xl p-6 shadow-[0_0_40px_rgba(255,255,255,0.04)]"
+          rounded-xl md:p-6 p-4 shadow-[0_0_40px_rgba(255,255,255,0.04)]"
           >
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Title */}
@@ -81,7 +81,7 @@ const CreateNote = () => {
                 </label>
 
                 <textarea
-                  rows="8"
+                  rows="6"
                   placeholder="Write your note here..."
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
@@ -125,7 +125,7 @@ const CreateNote = () => {
             />
           </Link>
           </div>
-          <div className="overflow-y-auto h-[70vh]">
+          <div className="overflow-y-auto max-h-[70vh]">
             <div className="flex flex-col gap-2 ">
               {notes.length > 0 ? (
                 [...notes].reverse().map((note) => (

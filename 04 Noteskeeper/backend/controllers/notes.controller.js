@@ -63,7 +63,8 @@ const updateNotes = async (req, res) => {
 
     return res.status(200).json({
       message: "Notes Updated successfully",
-      updatedNote,
+      success : true,
+      note : updatedNote,
     });
   } catch (error) {
     return res.status(500).json({ message: error.message, success: false });

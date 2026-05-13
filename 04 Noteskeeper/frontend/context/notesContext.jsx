@@ -35,10 +35,38 @@ export const NotesProvider = ({ children }) => {
     }
   }, []);
 
-  const deleteNote = () => {};
+  const updateNote = async (id, updatedData) => {
+    setLoading(true);
+    try {
+      const res = await BACKEND_URL.put(`/update-note/${id}`, updatedData);
+
+      setNotes((prev) =>
+        prev.map((note) => (note._id === id ? res.data.note : note)),
+      );
+    } catch (error) {
+      console.log("Notes Updating error :", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const deleteNote = async (id) => {
+    setLoading(true);
+    try {
+      const res = await BACKEND_URL.delete(`/delete/${id}`);
+
+      setNotes((prev) => prev.filter((note) => note._id !== id));
+    } catch (error) {
+      console.log("Notes deleting error : ", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <NotesContext.Provider value={{ notes, createNote, getAllNotes }}>
+    <NotesContext.Provider
+      value={{ notes, createNote, getAllNotes, updateNote, deleteNote , loading }}
+    >
       {children}
     </NotesContext.Provider>
   );

@@ -10,7 +10,7 @@ hover:border-gray-600
 hover:shadow-[0_0_40px_rgba(255,255,255,0.08)] 
 transition-all duration-300  rounded-3xl p-1 w-[88%] mb-5 m-auto text-white ">
       
-      <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col md:flex-row items-center justify-between gap-2">
+      <div className="max-w-7xl mx-auto md:px-6 px-4 py-5 flex flex-col md:flex-row md:items-center items-start justify-between gap-2">
         
         {/* Logo */}
         <div>
@@ -24,7 +24,7 @@ transition-all duration-300  rounded-3xl p-1 w-[88%] mb-5 m-auto text-white ">
         </div>
 
         {/* Links */}
-        <div className="flex items-center gap-6 text-gray-300">
+        <div className="flex items-center gap-3 text-gray-300">
           <Link
             to="/"
             className="hover:text-[#38bdf8] transition duration-300"
@@ -37,6 +37,13 @@ transition-all duration-300  rounded-3xl p-1 w-[88%] mb-5 m-auto text-white ">
             className="hover:text-[#38bdf8] transition duration-300"
           >
             Create Note
+          </Link>
+
+             <Link
+            to="/notes-history"
+            className="hover:text-[#38bdf8] transition duration-300"
+          >
+            Your Notes
           </Link>
         </div>
       </div>

@@ -4,13 +4,12 @@ import { NotesContext } from "../../context/notesContext";
 import { FaPlus } from "react-icons/fa";
 
 const Home = () => {
-  const { notes, getAllNotes } = useContext(NotesContext);
-
-  console.log(notes);
+  const { notes, getAllNotes , loading } = useContext(NotesContext);
 
   useEffect(() => {
     getAllNotes();
   }, [getAllNotes]);
+
 
   return (
     <div className=" bg-[#0f172a] text-white overflow-hidden">
@@ -63,7 +62,7 @@ backdrop-blur-xl
 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_0_30px_rgba(255,255,255,0.04)] 
 hover:border-gray-600 
 hover:shadow-[0_0_40px_rgba(255,255,255,0.08)] 
-transition-all duration-300  rounded-xl p-6 "
+transition-all duration-300  rounded-xl md:p-6 p-4"
             >
               <div className="flex items-center justify-between gap-2 mb-4">
                 <div className="flex gap-2 items-center justify-center">
@@ -139,7 +138,7 @@ backdrop-blur-xl
 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_0_30px_rgba(255,255,255,0.04)] 
 hover:border-gray-600 
 hover:shadow-[0_0_40px_rgba(255,255,255,0.08)] 
-transition-all duration-300  rounded-3xl p-8"
+transition-all duration-300  rounded-3xl md:p-8 p-5"
           >
             <div className="text-4xl mb-4">⚡</div>
 
@@ -156,7 +155,7 @@ backdrop-blur-xl
 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_0_30px_rgba(255,255,255,0.04)] 
 hover:border-gray-600 
 hover:shadow-[0_0_40px_rgba(255,255,255,0.08)] 
-transition-all duration-300  rounded-3xl p-8"
+transition-all duration-300  rounded-3xl md:p-8 p-5"
           >
             <div className="text-4xl mb-4">🎨</div>
 
@@ -173,7 +172,7 @@ backdrop-blur-xl
 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_0_30px_rgba(255,255,255,0.04)] 
 hover:border-gray-600 
 hover:shadow-[0_0_40px_rgba(255,255,255,0.08)] 
-transition-all duration-300  rounded-3xl p-8"
+transition-all duration-300  rounded-3xl md:p-8 p-5"
           >
             <div className="text-4xl mb-4">🔒</div>
 

@@ -3,7 +3,12 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="w-[90%] mx-auto mt-12 mb-6 bg-[#1e293b] border border-gray-800 rounded-4xl text-white">
+    <footer  className="bg-[#1e293b] border border-gray-800 
+backdrop-blur-xl 
+shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_0_30px_rgba(255,255,255,0.04)] 
+hover:border-gray-600 
+hover:shadow-[0_0_40px_rgba(255,255,255,0.08)] 
+transition-all duration-300  rounded-3xl p-1 w-[88%] mb-5 m-auto text-white ">
       
       <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col md:flex-row items-center justify-between gap-2">
         

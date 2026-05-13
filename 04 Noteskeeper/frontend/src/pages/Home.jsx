@@ -4,11 +4,9 @@ import { Link } from "react-router-dom";
 const Home = () => {
   return (
     <div className=" bg-[#0f172a] text-white overflow-hidden">
-
       {/* Hero Section */}
       <section className="max-w-7xl mx-auto px-6 py-20">
         <div className="grid md:grid-cols-2 gap-14 items-center">
-          
           {/* Left Content */}
           <div>
             <p className="text-[#38bdf8] font-semibold mb-4 tracking-wide">
@@ -23,8 +21,8 @@ const Home = () => {
             </h1>
 
             <p className="text-gray-400 text-lg mt-6 leading-relaxed">
-              A modern notes application to create, manage, and organize
-              your thoughts beautifully with a clean and minimal interface.
+              A modern notes application to create, manage, and organize your
+              thoughts beautifully with a clean and minimal interface.
             </p>
 
             {/* Buttons */}
@@ -49,8 +47,14 @@ const Home = () => {
           <div className="relative">
             <div className="absolute inset-0 bg-[#38bdf8]/20 blur-3xl rounded-full"></div>
 
-            <div className="relative bg-[#1e293b] border border-gray-800 rounded-3xl p-8 shadow-2xl backdrop-blur-lg">
-              
+            <div
+              className="relative bg-[#1e293b] border border-gray-800 
+backdrop-blur-xl 
+shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_0_30px_rgba(255,255,255,0.04)] 
+hover:border-gray-600 
+hover:shadow-[0_0_40px_rgba(255,255,255,0.08)] 
+transition-all duration-300  rounded-3xl p-8 "
+            >
               <div className="flex items-center gap-2 mb-6">
                 <div className="w-3 h-3 bg-red-400 rounded-full"></div>
                 <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
@@ -58,7 +62,6 @@ const Home = () => {
               </div>
 
               <div className="space-y-4">
-                
                 <div className="bg-[#0f172a] p-4 rounded-2xl">
                   <h3 className="font-semibold text-[#38bdf8]">
                     Project Ideas
@@ -69,9 +72,7 @@ const Home = () => {
                 </div>
 
                 <div className="bg-[#0f172a] p-4 rounded-2xl">
-                  <h3 className="font-semibold text-[#38bdf8]">
-                    Daily Tasks
-                  </h3>
+                  <h3 className="font-semibold text-[#38bdf8]">Daily Tasks</h3>
                   <p className="text-gray-400 text-sm mt-2">
                     Complete backend authentication APIs.
                   </p>
@@ -85,7 +86,6 @@ const Home = () => {
                     Learn MongoDB relationships and JWT auth.
                   </p>
                 </div>
-
               </div>
             </div>
           </div>
@@ -95,43 +95,56 @@ const Home = () => {
       {/* Features */}
       <section className="max-w-7xl mx-auto px-6 pb-20">
         <div className="grid md:grid-cols-3 gap-8">
-
-          <div className="bg-[#1e293b] border border-gray-800 rounded-3xl p-8 hover:scale-105 transition duration-300">
+          <div
+            className="bg-[#1e293b] border border-gray-800 
+backdrop-blur-xl 
+shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_0_30px_rgba(255,255,255,0.04)] 
+hover:border-gray-600 
+hover:shadow-[0_0_40px_rgba(255,255,255,0.08)] 
+transition-all duration-300  rounded-3xl p-8"
+          >
             <div className="text-4xl mb-4">⚡</div>
 
-            <h2 className="text-2xl font-bold mb-3">
-              Fast Experience
-            </h2>
+            <h2 className="text-2xl font-bold mb-3">Fast Experience</h2>
 
             <p className="text-gray-400 leading-relaxed">
               Create and manage notes instantly with a blazing-fast UI.
             </p>
           </div>
 
-          <div className="bg-[#1e293b] border border-gray-800 rounded-3xl p-8 hover:scale-105 transition duration-300">
+          <div
+            className="bg-[#1e293b] border border-gray-800 
+backdrop-blur-xl 
+shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_0_30px_rgba(255,255,255,0.04)] 
+hover:border-gray-600 
+hover:shadow-[0_0_40px_rgba(255,255,255,0.08)] 
+transition-all duration-300  rounded-3xl p-8"
+          >
             <div className="text-4xl mb-4">🎨</div>
 
-            <h2 className="text-2xl font-bold mb-3">
-              Beautiful Design
-            </h2>
+            <h2 className="text-2xl font-bold mb-3">Beautiful Design</h2>
 
             <p className="text-gray-400 leading-relaxed">
               Modern dark theme with elegant colors and clean layouts.
             </p>
           </div>
 
-          <div className="bg-[#1e293b] border border-gray-800 rounded-3xl p-8 hover:scale-105 transition duration-300">
+          <div
+            className="bg-[#1e293b] border border-gray-800 
+backdrop-blur-xl 
+shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_0_30px_rgba(255,255,255,0.04)] 
+hover:border-gray-600 
+hover:shadow-[0_0_40px_rgba(255,255,255,0.08)] 
+transition-all duration-300  rounded-3xl p-8"
+          >
             <div className="text-4xl mb-4">🔒</div>
 
-            <h2 className="text-2xl font-bold mb-3">
-              Secure Notes
-            </h2>
+            <h2 className="text-2xl font-bold mb-3">Secure Notes</h2>
 
             <p className="text-gray-400 leading-relaxed">
               Keep your notes safe and organized with structured storage.
             </p>
           </div>
-
         </div>
       </section>
     </div>

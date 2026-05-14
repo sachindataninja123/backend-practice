@@ -30,7 +30,7 @@ const registerController = async (req, res) => {
     });
 
     return res.status(201).json({
-      message: "User created successfully",
+      message: "User Registered successfully",
       success: true,
       user,
     });

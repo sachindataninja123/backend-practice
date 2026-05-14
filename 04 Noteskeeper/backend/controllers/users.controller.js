@@ -1,5 +1,8 @@
+const { config } = require("../config/config");
+const tokenBlackistModel = require("../models/tokenBlacklist.model");
 const userModel = require("../models/user.model");
 const { genAccessToken, genRefreshToken } = require("../utils/generateTokens");
+const jwt = require("jsonwebtoken");
 
 const registerController = async (req, res) => {
   try {
@@ -96,6 +99,54 @@ const getProfileController = async (req, res) => {
   }
 };
 
+const refreshTokenController = async (req, res) => {
+  try {
+    const refreshToken = req.cookies.refreshToken;
 
+    if (!refreshToken) {
+      return res.status(400).json({
+        message: "Refresh token missing",
+        success: false,
+      });
+    }
 
-module.exports = { registerController, loginController, getProfileController };
+    const decoded = jwt.verify(refreshToken, config.JWT_REFRESH_SECRET);
+    const accessToken = genAccessToken(decoded.userId);
+
+    return res.status(200).json({
+      message: "Access token refreshed",
+      success: true,
+      accessToken,
+    });
+  } catch (error) {
+    return res.status(500).json({ message: error.message, success: false });
+  }
+};
+
+const logoutController = async (req, res) => {
+  try {
+    const accessToken = req.headers.authorization.split(" ")[1];
+
+    await tokenBlackistModel.create({ token: accessToken });
+
+    res.clearCookie("refreshToken", {
+      httpOnly: true,
+      secure: false,
+      sameSite: "strict",
+    });
+
+    return res
+      .status(200)
+      .json({ message: "User logged out successfully", success: true });
+  } catch (error) {
+    return res.status(500).json({ message: error.message, success: false });
+  }
+};
+
+module.exports = {
+  registerController,
+  loginController,
+  getProfileController,
+  refreshTokenController,
+  logoutController,
+};

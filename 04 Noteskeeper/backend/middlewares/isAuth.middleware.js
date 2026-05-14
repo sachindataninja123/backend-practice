@@ -2,14 +2,23 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const { config } = require("../config/config");
 const userModel = require("../models/user.model");
+const tokenBlackistModel = require("../models/tokenBlacklist.model");
 
 const isAuth = async (req, res, next) => {
   try {
-    const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+    const token = req.headers.authorization?.split(" ")[1];
 
     if (!token) {
       return res.status(400).json({
         message: "Token is missing , please login again",
+        success: false,
+      });
+    }
+
+    const isBlackListed = await tokenBlackistModel.findOne({ token });
+    if (isBlackListed) {
+      return res.status(401).json({
+        message: "Token is invalid — please login again",
         success: false,
       });
     }
@@ -27,7 +36,10 @@ const isAuth = async (req, res, next) => {
     req.user = user;
     return next();
   } catch (error) {
-    console.log("isAuth middleware error: ", error);
+    return res.status(500).json({
+      message: error.message,
+      success: false,
+    });
   }
 };
 

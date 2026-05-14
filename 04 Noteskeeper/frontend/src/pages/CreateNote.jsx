@@ -109,21 +109,22 @@ const CreateNote = () => {
         <div className="md:w-1/2 border-2 p-4  rounded-lg border-gray-800 ">
           <div className="flex justify-between items-center mb-3 ">
             <h1 className="uppercase text-lg text-[#38bdf8] font-semibold ">
-            Your Thoughts
-          </h1>
-          <Link to="/notes-history"
-            className="group flex items-center justify-center
+              Your Thoughts
+            </h1>
+            <Link
+              to="/notes-history"
+              className="group flex items-center justify-center
               w-9 h-9 rounded-xl
               bg-cyan-500/10 border border-cyan-500/20
               hover:bg-cyan-500 hover:border-cyan-500
               transition-all duration-300
               hover:scale-110 cursor-pointer"
-          >
-            <FaArrowUpRightFromSquare
-              className="text-xl text-cyan-400
+            >
+              <FaArrowUpRightFromSquare
+                className="text-xl text-cyan-400
                 group-hover:text-white transition-all duration-300"
-            />
-          </Link>
+              />
+            </Link>
           </div>
           <div className="overflow-y-auto max-h-[70vh]">
             <div className="flex flex-col gap-2 ">

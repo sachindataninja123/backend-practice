@@ -1,6 +1,7 @@
 const express = require("express");
 const notesRouter = require("../routes/notes.route");
 const cors = require("cors");
+const userRouter = require("../routes/user.routes");
 
 const app = express();
 app.use(express.json());
@@ -17,5 +18,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/notes", notesRouter);
+app.use("/api/users", userRouter);
 
 module.exports = app;

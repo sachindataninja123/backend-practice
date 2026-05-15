@@ -4,12 +4,11 @@ import { NotesContext } from "../../context/notesContext";
 import { FaPlus } from "react-icons/fa";
 
 const Home = () => {
-  const { notes, getAllNotes , loading } = useContext(NotesContext);
+  const { notes, getAllNotes, loading } = useContext(NotesContext);
 
   useEffect(() => {
     getAllNotes();
   }, [getAllNotes]);
-
 
   return (
     <div className=" bg-[#0f172a] text-white overflow-hidden">
@@ -101,7 +100,7 @@ transition-all duration-300  rounded-xl md:p-6 p-4"
                             {note.title}
                           </h3>
 
-                          <p className="text-gray-400 text-sm mt-2">
+                          <p className="text-gray-400 text-sm mt-2 line-clamp-2">
                             {note.content}
                           </p>
 

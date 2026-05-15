@@ -102,7 +102,7 @@ const deleteNote = async (req, res) => {
     await notesModel.findByIdAndDelete(req.params.id);
 
     return res.status(200).json({
-      message: "note deleted successfully",
+      message: "Note deleted successfully",
       success: true,
     });
   } catch (error) {

@@ -1,18 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 import { CgProfile } from "react-icons/cg";
 import { MdEmail } from "react-icons/md";
 import { FaUserEdit } from "react-icons/fa";
 import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { NotesContext } from "../../context/notesContext";
 
 const MyProfile = () => {
   const [user, setUser] = useState(null);
+  const { setNotes } = useContext(NotesContext);
+
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
   const getProfile = async () => {
     try {
-      const token = localStorage.getItem("token");
-
       const user = await axios.get("http://localhost:3000/api/users/profile", {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -29,8 +34,29 @@ const MyProfile = () => {
     getProfile();
   }, []);
 
+  const logoutHandler = async () => {
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/api/users/logout",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      localStorage.removeItem("token");
+
+      toast.success(res.data.message);
+      navigate("/login");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Something went wrong");
+    }
+  };
+
   if (!user) {
-    return <div className="text-white text-center mt-10">Loading...</div>;
+    return <div className="text-white text-center mt-20">Loading...</div>;
   }
 
   return (
@@ -85,6 +111,7 @@ const MyProfile = () => {
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
             <button
+              onClick={logoutHandler}
               className="
               border border-red-500
               text-red-400

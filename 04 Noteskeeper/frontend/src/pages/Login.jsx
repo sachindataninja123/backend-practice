@@ -18,12 +18,14 @@ const Login = () => {
         password,
       });
 
+      localStorage.setItem("token", res.data.accessToken);
+
       toast.success(res.data.message);
 
       setEmail("");
       setPassword("");
 
-      navigate("/")
+      navigate("/");
     } catch (error) {
       toast.error(error.response?.data?.message);
     }

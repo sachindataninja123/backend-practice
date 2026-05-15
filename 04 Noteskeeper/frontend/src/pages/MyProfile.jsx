@@ -13,11 +13,12 @@ const MyProfile = () => {
   const [user, setUser] = useState(null);
   const { setNotes } = useContext(NotesContext);
 
-  const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
   const getProfile = async () => {
     try {
+      const token = localStorage.getItem("token");
+
       const user = await axios.get("http://localhost:3000/api/users/profile", {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -34,20 +35,39 @@ const MyProfile = () => {
     getProfile();
   }, []);
 
+  // const logoutHandler = async () => {
+  //   try {
+  //     const token = localStorage.getItem("token");
+
+  //     const res = await axios.post(
+  //       "http://localhost:3000/api/users/logout",
+  //       {},
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       },
+  //     );
+
+  //     localStorage.removeItem("token");
+
+  //     toast.success(res.data.message);
+  //     navigate("/login");
+  //   } catch (error) {
+  //     toast.error(error.response?.data?.message || "Something went wrong");
+  //   }
+  // };
+
   const logoutHandler = async () => {
     try {
+      const token = localStorage.getItem("token");
+
       const res = await axios.post(
         "http://localhost:3000/api/users/logout",
         {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
+        { headers: { Authorization: `Bearer ${token}` } },
       );
-
       localStorage.removeItem("token");
-
       toast.success(res.data.message);
       navigate("/login");
     } catch (error) {

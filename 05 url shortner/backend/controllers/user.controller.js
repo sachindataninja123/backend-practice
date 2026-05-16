@@ -29,10 +29,12 @@ const registerController = async (req, res) => {
       password,
     });
 
+    const userData = await userModel.findById(newUser._id).select("-password");
+
     return res.status(201).json({
       message: "User register successfully",
       success: true,
-      newUser,
+      userData,
     });
   } catch (error) {
     res.status(500).json({
@@ -70,6 +72,8 @@ const loginController = async (req, res) => {
       });
     }
 
+    const userData = await userModel.findById(user._id).select("-password");
+
     const accessToken = genAccessToken(user._id);
     const refreshToken = genRefreshToken(user._id);
 
@@ -83,7 +87,7 @@ const loginController = async (req, res) => {
     return res.status(200).json({
       message: "User logged in successfully",
       success: true,
-      user,
+      userData,
       accessToken: accessToken,
     });
   } catch (error) {
@@ -165,5 +169,5 @@ export {
   loginController,
   profileController,
   logoutController,
-  refreshTokenController
+  refreshTokenController,
 };

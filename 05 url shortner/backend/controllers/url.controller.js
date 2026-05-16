@@ -17,6 +17,7 @@ const shortenUrlController = async (req, res) => {
     const newUrl = await urlModel.create({
       originalUrl,
       shortUrl,
+      user: req.user._id,
     });
 
     res.status(201).json({
@@ -60,7 +61,9 @@ const redirectUrlController = async (req, res) => {
 
 const getUrlController = async (req, res) => {
   try {
-    const url = await urlModel.find();
+    const url = await urlModel
+      .find({ user: req.user._id })
+      .populate("user", "name email _id");
 
     if (!url) {
       return res.status(404).json({
@@ -82,10 +85,45 @@ const getUrlController = async (req, res) => {
   }
 };
 
+const updateUrlController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { originalUrl } = req.body;
+
+    const url = await urlModel.findOne({
+      _id: id,
+      user: req.user._id,
+    });
+
+    if (!url) {
+      return res.status(404).json({
+        success: false,
+        message: "URL not found",
+      });
+    }
+
+    url.originalUrl = originalUrl || url.originalUrl;
+
+    await url.save();
+
+    res.status(200).json({
+      success: true,
+      message: "URL updated successfully",
+      data: url,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 const deleteUrlController = async (req, res) => {
   try {
     const url = await urlModel.findOne({
       _id: req.params.id,
+      user: req.user._id,
     });
 
     if (!url) {
@@ -113,5 +151,6 @@ export {
   shortenUrlController,
   redirectUrlController,
   getUrlController,
+  updateUrlController,
   deleteUrlController,
 };

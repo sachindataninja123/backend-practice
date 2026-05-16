@@ -4,16 +4,16 @@ import {
   getUrlController,
   redirectUrlController,
   shortenUrlController,
+  updateUrlController,
 } from "../controllers/url.controller.js";
+import isAuth from "../middlewares/isAuth.middleware.js";
 
 const urlRouter = express.Router();
 
-urlRouter.post("/shorten", shortenUrlController);
-
+urlRouter.post("/shorten", isAuth, shortenUrlController);
 urlRouter.get("/:shortUrl", redirectUrlController);
-
-urlRouter.get("/", getUrlController);
-
-urlRouter.delete("/delete/:id", deleteUrlController);
+urlRouter.get("/", isAuth, getUrlController);
+urlRouter.put("/update/:id", isAuth, updateUrlController);
+urlRouter.delete("/delete/:id", isAuth, deleteUrlController);
 
 export default urlRouter;

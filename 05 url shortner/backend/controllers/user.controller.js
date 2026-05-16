@@ -1,5 +1,8 @@
+import config from "../config/config.js";
+import blacklistTokenModel from "../models/blacklistToken.model.js";
 import userModel from "../models/user.model.js";
 import { genAccessToken, genRefreshToken } from "../utils/generateToken.js";
+import jwt from "jsonwebtoken";
 
 const registerController = async (req, res) => {
   try {
@@ -106,4 +109,61 @@ const profileController = async (req, res) => {
   }
 };
 
-export { registerController, loginController, profileController };
+const logoutController = async (req, res) => {
+  try {
+    const accessToken = req.headers.authorization.split(" ")[1];
+
+    await blacklistTokenModel.create({ token: accessToken });
+
+    res.clearCookie("refreshToken", {
+      httpOnly: true,
+      secure: false,
+      sameSite: "strict",
+    });
+
+    res.status(200).json({
+      message: "User logged out successfully",
+      success: false,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+const refreshTokenController = async (req, res) => {
+  try {
+    const refreshToken = req.cookies.refreshToken;
+
+    if (!refreshToken) {
+      return res.status(400).json({
+        message: "Refresh token is invalid",
+        success: false,
+      });
+    }
+
+    const decoded = jwt.verify(refreshToken, config.JWT_REFRESH_SECRET);
+    const accessToken = genAccessToken(decoded.userId);
+
+    return res.status(200).json({
+      message: "AccessToken token refreshed",
+      success: true,
+      accessToken: accessToken,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export {
+  registerController,
+  loginController,
+  profileController,
+  logoutController,
+  refreshTokenController
+};

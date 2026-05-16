@@ -8,10 +8,10 @@ import NotesHistory from "./pages/NotesHistory";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 
-
-import {ToastContainer} from "react-toastify"
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import MyProfile from "./pages/MyProfile";
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 const App = () => {
   return (
@@ -33,12 +33,33 @@ const App = () => {
       <main className="flex-1">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/create-notes" element={<CreateNote />} />
-          <Route path="/notes-history" element={<NotesHistory />} />
+          <Route
+            path="/create-notes"
+            element={
+              <ProtectedRoute>
+                <CreateNote />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/notes-history"
+            element={
+              <ProtectedRoute>
+                <NotesHistory />
+              </ProtectedRoute>
+            }
+          />
 
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-           <Route path="/myprofile" element={<MyProfile />} />
+          <Route
+            path="/myprofile"
+            element={
+              <ProtectedRoute>
+                <MyProfile />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </main>
 

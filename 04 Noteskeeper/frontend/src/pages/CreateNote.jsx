@@ -2,13 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import { NotesContext } from "../../context/notesContext";
 import axios from "axios";
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const CreateNote = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
   const { createNote, notes, getAllNotes } = useContext(NotesContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getAllNotes();
@@ -22,10 +23,12 @@ const CreateNote = () => {
       content,
     };
 
-    await createNote(noteData);
+    const success = await createNote(noteData);
 
-    setTitle("");
-    setContent("");
+    if (success) {
+      setTitle("");
+      setContent("");
+    }
   };
 
   return (

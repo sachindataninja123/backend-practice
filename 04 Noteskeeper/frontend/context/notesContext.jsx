@@ -24,8 +24,11 @@ export const NotesProvider = ({ children }) => {
       setNotes((prev) => [res.data.note, ...prev]);
 
       toast.success(res.data.message);
+
+      return true;
     } catch (error) {
       console.log("Notes created error", error);
+      return false;
     } finally {
       setLoading(false);
     }

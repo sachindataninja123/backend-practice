@@ -23,7 +23,7 @@ const shortenUrlController = async (req, res) => {
     res.status(201).json({
       success: true,
       message: "Short url created successfully",
-      shortUrl: `http://localhost:5000/${shortUrl}`,
+      shortUrl: `http://localhost:8000/api/url/${shortUrl}`,
       data: newUrl,
     });
   } catch (error) {
@@ -61,9 +61,7 @@ const redirectUrlController = async (req, res) => {
 
 const getUrlController = async (req, res) => {
   try {
-    const url = await urlModel
-      .find({ user: req.user._id })
-      .populate("user", "name email _id");
+    const url = await urlModel.find({ user: req.user._id });
 
     if (!url) {
       return res.status(404).json({
@@ -76,6 +74,7 @@ const getUrlController = async (req, res) => {
       message: "Url fetched successfully",
       success: true,
       url,
+      user: req.user,
     });
   } catch (error) {
     res.status(500).json({

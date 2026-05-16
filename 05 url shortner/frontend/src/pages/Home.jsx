@@ -1,8 +1,36 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import { useState } from "react";
+import axios from "axios";
 
 const Home = () => {
+  const [originalUrl, setOriginalUrl] = useState("");
+  const [shortUrl, setShortUrl] = useState([]);
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await axios.post(
+        "http://localhost:8000/api/url/shorten",
+        {
+          originalUrl,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        },
+      );
+
+      setShortUrl(res.data.shortUrl);
+      setOriginalUrl("");
+    } catch (error) {
+      console.log("shorten url error", error.response?.data || error.message);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-950 text-white">
       {/* Hero Section */}
@@ -19,22 +47,44 @@ const Home = () => {
         </div>
 
         {/* URL Box */}
-        <div className="w-full max-w-3xl mt-12 bg-white rounded-2xl p-3 shadow-2xl flex flex-col md:flex-row gap-3">
-          <input
-            type="text"
-            placeholder="Paste your long URL here..."
-            className="flex-1 px-5 py-4 rounded-xl outline-none text-black text-lg"
-          />
+        <div className="w-full flex items-center justify-center">
+          <form
+            onSubmit={(e) => submitHandler(e)}
+            action=""
+            className="w-full max-w-3xl mt-12 bg-gray-200 rounded-2xl p-3 shadow-2xl flex flex-col md:flex-row gap-3"
+          >
+            <input
+              type="text"
+              value={originalUrl}
+              onChange={(e) => setOriginalUrl(e.target.value)}
+              placeholder="Paste your long URL here..."
+              className="flex-1 px-5 py-4 rounded-xl outline-none text-black text-lg"
+            />
 
-          <button className="bg-sky-500 hover:bg-sky-600 transition text-white px-8 py-4 rounded-xl font-semibold text-lg">
-            Shorten URL
-          </button>
+            <button
+              type="submit"
+              className="bg-sky-500 cursor-pointer hover:bg-sky-600 transition text-white px-8 py-4 rounded-xl font-semibold text-lg"
+            >
+              Shorten URL
+            </button>
+          </form>
         </div>
 
-        {/* Demo Result */}
-        <div className="mt-6 text-sky-400 text-lg font-medium">
-          shortly.io/abc123
-        </div>
+        {/* short Url */}
+        {shortUrl && (
+          <div className="mt-8 bg-slate-900 border border-slate-800 px-6 py-4 rounded-2xl">
+            <p className="text-slate-400 mb-2">Your Short URL</p>
+
+            <a
+              href={shortUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="text-sky-400 text-lg hover:underline"
+            >
+              {shortUrl}
+            </a>
+          </div>
+        )}
       </section>
 
       {/* Features */}

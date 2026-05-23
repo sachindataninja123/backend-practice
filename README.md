@@ -1,2 +1,102 @@
 # backend-practice
-My backend development practice projects — Node.js, Express, MongoDB, Authentication, REST APIs and more.
+
+My backend development practice projects built with Node.js, Express, MongoDB, Authentication, REST APIs and more.
+
+---
+
+## Projects
+
+| # | Project | Description |
+|---|---|---|
+| 01 | [Auth System](#01-auth-system) | JWT-based authentication with protected routes |
+| 02 | [RBAC Auth System](#02-rbac-auth-system) | Role-based access control with multiple user roles |
+| 03 | [Chess](#03-chess) | Chess game with backend logic |
+| 04 | [Noteskeeper](#04-noteskeeper) | Notes app with protected CRUD routes |
+| 05 | [URL Shortner](#05-url-shortner) | Full-stack URL shortener with frontend integration |
+
+---
+
+## 01 Auth System
+
+A foundational authentication system using JWT tokens and secure password hashing.
+
+**Features**
+- User registration and login
+- JWT token generation and verification
+- Protected routes with auth middleware
+- Password hashing with bcrypt
+
+**Tech:** Node.js, Express, MongoDB, Mongoose, JWT, bcrypt
+
+---
+
+## 02 RBAC Auth System
+
+Extends the basic auth system with Role-Based Access Control — different users have different permissions.
+
+**Features**
+- Multiple user roles (e.g. admin, user, moderator)
+- Role-based middleware for route protection
+- Permission checks per endpoint
+
+**Tech:** Node.js, Express, MongoDB, Mongoose, JWT, bcrypt
+
+---
+
+## 03 Chess
+
+A chess game with backend logic for move validation and game state management.
+
+**Features**
+- Chess game logic on the server
+- Move validation
+- Game state tracking
+
+**Tech:** Node.js, Express, Socket.IO
+
+---
+
+## 04 Noteskeeper
+
+A notes management app with authentication and protected CRUD operations.
+
+**Features**
+- Create, read, update, delete notes
+- User-specific notes (each user sees only their own)
+- Protected routes — login required
+
+**Tech:** Node.js, Express, MongoDB, Mongoose, JWT
+
+---
+
+## 05 URL Shortner
+
+A full-stack URL shortener — paste a long URL, get a short one. Frontend integrated with backend.
+
+**Features**
+- Shorten any URL to a compact link
+- Redirect from short URL to original
+- Click tracking
+- Frontend UI integrated with backend API
+
+**Tech:** Node.js, Express, MongoDB, Mongoose, EJS / HTML
+
+---
+
+## Getting Started
+
+Each project lives in its own folder. To run any project:
+
+```bash
+# Navigate to the project folder
+cd 01\ auth\ system
+
+# Install dependencies
+npm install
+
+# Add a .env file with your config (see below)
+
+# Start the server
+npm start
+```
+

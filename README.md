@@ -100,3 +100,30 @@ npm install
 npm start
 ```
 
+### Common Environment Variables
+
+Most projects use some combination of these:
+
+```env
+PORT=3000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret_key
+```
+
+---
+
+## Tech Stack
+
+- **Runtime** — Node.js
+- **Framework** — Express.js
+- **Database** — MongoDB + Mongoose
+- **Auth** — JWT + bcrypt
+- **Real-time** — Socket.IO (Chess)
+- **Templating** — EJS
+
+---
+
+## Author
+
+**Sachin Kush** — [sachindataninja123](https://github.com/sachindataninja123)
+

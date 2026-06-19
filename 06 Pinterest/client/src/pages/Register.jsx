@@ -12,7 +12,7 @@ const Register = () => {
     password: "",
   });
 
-  const { register } = useContext(AuthContext);
+  const { handleRegister } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -26,7 +26,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    register(formData);
+    handleRegister(formData);
 
     navigate("/login");
 

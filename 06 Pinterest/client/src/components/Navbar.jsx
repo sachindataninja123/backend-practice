@@ -23,7 +23,7 @@ const Navbar = () => {
     };
   }, []);
 
-  const { user } = useContext(AuthContext);
+  const { user, handleLogout } = useContext(AuthContext);
 
   return (
     <nav className="flex justify-between items-center px-6 py-4 shadow">
@@ -51,7 +51,10 @@ const Navbar = () => {
                 </Link>
 
                 <div className="border-t">
-                  <button className="w-full cursor-pointer  text-left py-2 text-red-500">
+                  <button
+                    onClick={handleLogout}
+                    className="w-full cursor-pointer  text-left py-2 text-red-500"
+                  >
                     Logout
                   </button>
                 </div>

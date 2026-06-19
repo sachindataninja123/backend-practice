@@ -3,17 +3,20 @@ import { createContext } from "react";
 import {
   getCurrentUser,
   loginUser,
+  logoutUser,
   registerUser,
 } from "../services/authService";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
-  const register = async (formData) => {
+  const handleRegister = async (formData) => {
     try {
       const data = await registerUser(formData);
 
@@ -23,12 +26,25 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const login = async (formData) => {
+  const handleLogin = async (formData) => {
     try {
       const data = await loginUser(formData);
       setUser(data);
 
       localStorage.setItem("token", data.accessToken);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logoutUser();
+
+      localStorage.removeItem("token");
+      setUser(null);
+
+      navigate("/login")
     } catch (error) {
       console.log(error);
     }
@@ -50,7 +66,9 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, setUser, login, register, loading }}>
+    <AuthContext.Provider
+      value={{ user, setUser, handleLogin, handleRegister, loading, handleLogout }}
+    >
       {children}
     </AuthContext.Provider>
   );

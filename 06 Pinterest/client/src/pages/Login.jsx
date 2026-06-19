@@ -9,7 +9,7 @@ const Login = () => {
     password: "",
   });
 
-  const { login } = useContext(AuthContext);
+  const { handleLogin } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -23,7 +23,7 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    login(formData);
+    handleLogin(formData);
 
     navigate("/");
 

@@ -21,3 +21,14 @@ export const getCurrentUser = async () => {
 
   return res.data;
 };
+
+export const logoutUser = async () => {
+  const token = localStorage.getItem("token");
+  const res = await api.get("/user/logout", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return res.data;
+};

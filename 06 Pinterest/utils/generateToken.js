@@ -3,7 +3,9 @@ const express = require("express");
 
 const genAccessToken = (userId) => {
   try {
-    const accessToken = jwt.sign({ userId }, process.env.JWT_ACCESS_SECRET);
+    const accessToken = jwt.sign({ userId }, process.env.JWT_ACCESS_SECRET, {
+      expiresIn: "15m",
+    });
     return accessToken;
   } catch (error) {
     console.log("access Token error", error);
@@ -12,7 +14,9 @@ const genAccessToken = (userId) => {
 
 const genRefreshToken = (userId) => {
   try {
-    const refreshToken = jwt.sign({ userId }, process.env.JWT_REFRESH_SECRET);
+    const refreshToken = jwt.sign({ userId }, process.env.JWT_REFRESH_SECRET, {
+      expiresIn: "7d",
+    });
     return refreshToken;
   } catch (error) {
     console.log("access Token error", error);

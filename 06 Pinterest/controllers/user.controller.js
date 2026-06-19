@@ -1,9 +1,10 @@
 const userModel = require("../models/user.model");
 const { genAccessToken, genRefreshToken } = require("../utils/generateToken");
+const jwt = require("jsonwebtoken");
 
-const register = async (req, res) => {
+const registerController = async (req, res) => {
   try {
-    const { username, email, password, fullname } = req.body;
+    const { username, email, password, fullname, dp } = req.body;
 
     if (!username || !email || !password || !fullname) {
       return res.status(400).json({
@@ -40,7 +41,7 @@ const register = async (req, res) => {
   }
 };
 
-const login = async (req, res) => {
+const loginController = async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -59,10 +60,10 @@ const login = async (req, res) => {
       });
     }
 
-    const isValidUser = await existUser.comparePassword(existUser.password);
+    const isValidUser = await existUser.comparePassword(password);
     if (!isValidUser) {
       return res.status(400).json({
-        message: "  Email and Password are invalid",
+        message: "Email and Password are invalid",
         success: false,
       });
     }
@@ -93,55 +94,65 @@ const login = async (req, res) => {
   }
 };
 
-const login = async (req, res) => {
+const getMeController = async (req, res) => {
   try {
-    const { email, password } = req.body;
-
-    if (!email || !password) {
-      return res.status(400).json({
-        message: "Email, Password are required",
-        success: false,
-      });
-    }
-
-    const existUser = await userModel.findOne({ email }).select("+password");
-    if (!existUser) {
-      return res.status(400).json({
-        message: "User does'nt exists",
-        success: false,
-      });
-    }
-
-    const isValidUser = await existUser.comparePassword(existUser.password);
-    if (!isValidUser) {
-      return res.status(400).json({
-        message: "  Email and Password are invalid",
-        success: false,
-      });
-    }
-
-    const accessToken = await genAccessToken(existUser._id);
-    const refreshToken = await genRefreshToken(existUser._id);
-
-    // 5. Refresh token → cookie only
-    res.cookie("refreshToken", refreshToken, {
-      httpOnly: true,
-      secure: false, // true in production
-      sameSite: "strict",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
-
-    const safeUser = await userModel
-      .findById(existUser._id)
-      .select("-password");
-
-    return res.status(201).json({
-      message: "User login successfully",
+    return res.status(200).json({
+      message: "User fetched successfully",
       success: true,
-      safeUser,
-      accessToken: accessToken,
+      user: req.user,
     });
   } catch (error) {
-    console.log("login error", error);
+    console.log("profile error  ", error);
   }
+};
+
+const refreshTokenController = async (req, res) => {
+  try {
+    const refreshToken = req.cookies.refreshToken;
+
+    if (!refreshToken) {
+      return res.status(400).json({
+        message: "RefreshToken is missing!",
+        success: false,
+      });
+    }
+
+    const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
+    const accessToken = await genAccessToken(decoded.userId);
+
+    return res.status(200).json({
+      message: "Access token refreshed",
+      success: true,
+      accessToken,
+    });
+  } catch (error) {
+    return res.status(500).json({ message: error.message, success: false });
+  }
+};
+
+const logoutController = async (req, res) => {
+  try {
+    const accessToken = req.headers.authorization?.split(" ")[1];
+
+    res.clearCookie("refreshToken", {
+      httpOnly: true,
+      secure: false,
+      sameSite: "strict",
+    });
+
+    return res.status(200).json({
+      message: "User logged out successfully",
+      success: true,
+    });
+  } catch (error) {
+    return res.status(500).json({ message: error.message, success: false });
+  }
+};
+
+module.exports = {
+  registerController,
+  loginController,
+  getMeController,
+  refreshTokenController,
+  logoutController,
 };

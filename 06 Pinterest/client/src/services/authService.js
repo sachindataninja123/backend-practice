@@ -10,4 +10,14 @@ export const loginUser = async (data) => {
   return res.data;
 };
 
+export const getCurrentUser = async () => {
+  const token = localStorage.getItem("token");
 
+  const res = await api.get("/user/profile", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return res.data;
+};

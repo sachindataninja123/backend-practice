@@ -11,7 +11,7 @@ export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true);
 
   const register = async (formData) => {
     try {
@@ -38,8 +38,7 @@ const AuthProvider = ({ children }) => {
     const checkAuth = async () => {
       try {
         const data = await getCurrentUser();
-        setUser(data);
-        console.log(data)
+        setUser(data.user);
       } catch (error) {
         setUser(null);
       } finally {

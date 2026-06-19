@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const userModel = require("../models/user.model");
+const tokenBlacklistModel = require("../models/tokenBlacklist.model");
 
 const isAuth = async (req, res, next) => {
   try {
@@ -12,8 +13,16 @@ const isAuth = async (req, res, next) => {
       });
     }
 
+    const isBlacklisted = await tokenBlacklistModel.findOne({ token });
+    if (isBlacklisted) {
+      return res.status(401).json({
+        message: "Token is invalid — please login again",
+        success: false,
+      });
+    }
+
     const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
-    // Find user, exclude password
+
     const user = await userModel.findById(decoded.userId).select("-password");
     if (!user) {
       return res.status(401).json({

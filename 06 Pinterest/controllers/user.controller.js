@@ -1,3 +1,4 @@
+const tokenBlacklistModel = require("../models/tokenBlacklist.model");
 const userModel = require("../models/user.model");
 const { genAccessToken, genRefreshToken } = require("../utils/generateToken");
 const jwt = require("jsonwebtoken");
@@ -133,6 +134,8 @@ const refreshTokenController = async (req, res) => {
 const logoutController = async (req, res) => {
   try {
     const accessToken = req.headers.authorization?.split(" ")[1];
+
+    await tokenBlacklistModel.create({ token: accessToken });
 
     res.clearCookie("refreshToken", {
       httpOnly: true,

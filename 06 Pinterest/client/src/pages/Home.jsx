@@ -1,4 +1,6 @@
 import React from "react";
+import PinCard from "../components/PinCard";
+import Navbar from "../components/Navbar";
 
 const pins = [
   {
@@ -36,32 +38,13 @@ const pins = [
 const Home = () => {
   return (
     <div className="min-h-screen bg-white">
-      {/* Navbar */}
-      <nav className="sticky top-0 z-50 bg-white border-b px-6 py-3 flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-red-600">Pinterest</h1>
-
-        <input
-          type="text"
-          placeholder="Search pins..."
-          className="w-1/2 bg-gray-100 rounded-full px-5 py-2 outline-none"
-        />
-
-        <div className="w-10 h-10 rounded-full bg-gray-300"></div>
-      </nav>
+      <Navbar />
 
       {/* Feed */}
       <div className="p-4 columns-2 md:columns-3 lg:columns-5 gap-4">
         {pins.map((pin) => (
           <div key={pin.id} className="mb-4 break-inside-avoid cursor-pointer">
-            <div className="overflow-hidden rounded-2xl">
-              <img
-                src={pin.image}
-                alt={pin.title}
-                className="w-full rounded-2xl hover:scale-105 transition duration-300"
-              />
-            </div>
-
-            <h3 className="mt-2 font-semibold px-1">{pin.title}</h3>
+            <PinCard pin={pin} />
           </div>
         ))}
       </div>

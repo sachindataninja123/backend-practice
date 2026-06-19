@@ -1,5 +1,8 @@
+import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router";
+import { useContext } from "react";
+import { Link, useNavigate } from "react-router";
+import { AuthContext } from "../context/AuthContext";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +12,10 @@ const Register = () => {
     password: "",
   });
 
+  const { register } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -16,32 +23,32 @@ const Register = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(formData);
+    register(formData);
 
-    // API Call Here
-    
+    navigate("/login");
+
+    setFormData({
+      username: "",
+      fullname: "",
+      email: "",
+      password: "",
+    });
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
-        <h1 className="text-3xl font-bold text-center mb-2">
-          Create Account
-        </h1>
+        <h1 className="text-3xl font-bold text-center mb-2">Create Account</h1>
 
-        <p className="text-gray-500 text-center mb-6">
-          Join Pinterest Clone
-        </p>
+        <p className="text-gray-500 text-center mb-6">Join Pinterest Clone</p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Full Name */}
           <div>
-            <label className="block mb-1 font-medium">
-              Full Name
-            </label>
+            <label className="block mb-1 font-medium">Full Name</label>
             <input
               type="text"
               name="fullname"
@@ -55,9 +62,7 @@ const Register = () => {
 
           {/* Username */}
           <div>
-            <label className="block mb-1 font-medium">
-              Username
-            </label>
+            <label className="block mb-1 font-medium">Username</label>
             <input
               type="text"
               name="username"
@@ -71,9 +76,7 @@ const Register = () => {
 
           {/* Email */}
           <div>
-            <label className="block mb-1 font-medium">
-              Email
-            </label>
+            <label className="block mb-1 font-medium">Email</label>
             <input
               type="email"
               name="email"
@@ -87,9 +90,7 @@ const Register = () => {
 
           {/* Password */}
           <div>
-            <label className="block mb-1 font-medium">
-              Password
-            </label>
+            <label className="block mb-1 font-medium">Password</label>
             <input
               type="password"
               name="password"

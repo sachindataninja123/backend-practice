@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 
 const registerController = async (req, res) => {
   try {
-    const { username, email, password, fullname, dp } = req.body;
+    const { username, email, password, fullname } = req.body;
 
     if (!username || !email || !password || !fullname) {
       return res.status(400).json({
@@ -27,7 +27,6 @@ const registerController = async (req, res) => {
       email,
       password,
       fullname,
-      dp,
     });
 
     const safeUser = await userModel.findById(user._id).select("-password");

@@ -20,12 +20,10 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    handleLogin(formData);
-
-    navigate("/");
+    await handleLogin(formData);
 
     setFormData({
       password: "",

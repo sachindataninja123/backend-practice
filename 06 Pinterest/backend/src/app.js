@@ -3,11 +3,14 @@ const userRouter = require("../routes/user.routes");
 const postRouter = require("../routes/post.routes");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
+
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.get("/", (req, res) => {
   res.send("hello");

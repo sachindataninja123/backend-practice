@@ -8,6 +8,7 @@ import {
 } from "../services/authService";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export const AuthContext = createContext();
 
@@ -21,8 +22,12 @@ const AuthProvider = ({ children }) => {
       const data = await registerUser(formData);
 
       setUser(data);
+      toast.success(data?.message);
+
+      navigate("/login");
     } catch (error) {
       console.log(error);
+      toast.error(error.response?.data?.message || "Register failed");
     }
   };
 
@@ -32,21 +37,25 @@ const AuthProvider = ({ children }) => {
       setUser(data);
 
       localStorage.setItem("token", data.accessToken);
+      toast.success(data?.message);
+
+      navigate("/");
     } catch (error) {
       console.log(error);
+      toast.error(error.response?.data?.message || "Register failed");
     }
   };
 
   const handleLogout = async () => {
     try {
-      await logoutUser();
+      const data = await logoutUser();
 
       localStorage.removeItem("token");
+      toast.success(data?.message);
       setUser(null);
-
-      navigate("/login")
     } catch (error) {
       console.log(error);
+      toast.error(error.response?.data?.message || "Register failed");
     }
   };
 
@@ -67,7 +76,14 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, setUser, handleLogin, handleRegister, loading, handleLogout }}
+      value={{
+        user,
+        setUser,
+        handleLogin,
+        handleRegister,
+        loading,
+        handleLogout,
+      }}
     >
       {children}
     </AuthContext.Provider>

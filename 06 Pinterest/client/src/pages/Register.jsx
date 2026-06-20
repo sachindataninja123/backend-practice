@@ -26,9 +26,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    handleRegister(formData);
-
-    navigate("/login");
+    await handleRegister(formData);
 
     setFormData({
       username: "",

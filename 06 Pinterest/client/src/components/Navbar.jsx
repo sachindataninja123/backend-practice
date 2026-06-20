@@ -52,7 +52,10 @@ const Navbar = () => {
 
                 <div className="border-t">
                   <button
-                    onClick={handleLogout}
+                    onClick={() => {
+                      handleLogout();
+                      setOpen(false);
+                    }}
                     className="w-full cursor-pointer  text-left py-2 text-red-500"
                   >
                     Logout

@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 const Profile = () => {
-  const { user } = useContext(AuthContext);
+  const { user, handleLogout } = useContext(AuthContext);
 
   const pins = [
     "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
@@ -29,14 +29,17 @@ const Profile = () => {
           {user.fullname?.charAt(0).toUpperCase()}
         </div>
 
-        <h1 className="text-3xl font-bold mt-4">{user.fullname}</h1>
+        <h1 className="text-3xl capitalize font-bold mt-4">{user.fullname}</h1>
 
         <p className="text-gray-500">@{user.username}</p>
 
         <p className="mt-2 text-gray-600">{user.email}</p>
 
-        <button className="mt-5 bg-red-500 text-white px-6 py-2 rounded-full hover:bg-red-600">
-          Edit Profile
+        <button
+          onClick={handleLogout}
+          className="mt-5 bg-red-500 text-white px-6 py-2 rounded-full hover:bg-red-600"
+        >
+          Logout
         </button>
       </div>
 

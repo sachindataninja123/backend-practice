@@ -5,6 +5,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Profile from "../pages/Profile";
 import ProtectedRoute from "../components/ProtectedRoute";
+import CreatePost from "../pages/CreatePost";
 
 const Approutes = () => {
   return (
@@ -17,6 +18,14 @@ const Approutes = () => {
         element={
           <ProtectedRoute>
             <Profile />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/add-post"
+        element={
+          <ProtectedRoute>
+            <CreatePost />
           </ProtectedRoute>
         }
       />

@@ -4,6 +4,7 @@ const upload = require("../middlewares/multer.middleware");
 const {
   createPostController,
   getAllPosts,
+  getMyPosts,
 } = require("../controllers/post.controller");
 
 const postRouter = express.Router();
@@ -14,6 +15,7 @@ postRouter.post(
   upload.single("image"),
   createPostController,
 );
-postRouter.get("/all", isAuth, getAllPosts);
+postRouter.get("/mypost", isAuth, getMyPosts);
+postRouter.get("/all", getAllPosts);
 
 module.exports = postRouter;

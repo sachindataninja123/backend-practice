@@ -31,6 +31,25 @@ const createPostController = async (req, res) => {
   }
 };
 
+const getMyPosts = async (req, res) => {
+  try {
+    const posts = await postModel
+      .find({ user: req.user._id })
+      .populate("user", "fullname username")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      posts,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 const getAllPosts = async (req, res) => {
   try {
     const posts = await postModel
@@ -49,4 +68,4 @@ const getAllPosts = async (req, res) => {
   }
 };
 
-module.exports = { createPostController , getAllPosts};
+module.exports = { createPostController, getMyPosts, getAllPosts };

@@ -4,12 +4,13 @@ import { createContext } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { createPost, getAllPosts } from "../services/postService";
+import { createPost, getAllPosts, getMyPosts } from "../services/postService";
 
 export const PostContext = createContext();
 
 const PostProvider = ({ children }) => {
   const [posts, setPosts] = useState([]);
+  const [myPosts, setMyPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -33,11 +34,22 @@ const PostProvider = ({ children }) => {
     fetchPosts();
   }, []);
 
+  useEffect(() => {
+    const fetchMyPosts = async () => {
+      const data = await getMyPosts();
+      setMyPosts(data.posts);
+    };
+
+    fetchMyPosts();
+  }, []);
+
   return (
     <PostContext.Provider
       value={{
         posts,
         setPosts,
+        myPosts,
+        setMyPosts,
         handleCreatePost,
         loading,
       }}

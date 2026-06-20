@@ -1,5 +1,6 @@
 const postModel = require("../models/post.model");
 const userModel = require("../models/user.model");
+const { post } = require("../routes/user.routes");
 
 const createPostController = async (req, res) => {
   try {
@@ -30,4 +31,22 @@ const createPostController = async (req, res) => {
   }
 };
 
-module.exports = { createPostController };
+const getAllPosts = async (req, res) => {
+  try {
+    const posts = await postModel
+      .find()
+      .populate("user", "fullname username")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      posts,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+module.exports = { createPostController , getAllPosts};

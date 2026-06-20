@@ -8,8 +8,8 @@ const Profile = () => {
   const { user, handleLogout } = useContext(AuthContext);
   const [showModal, setShowModal] = useState(false);
 
-  const { post } = useContext(PostContext);
-  console.log(post);
+  const { posts } = useContext(PostContext);
+  console.log(posts);
 
   if (!user) {
     return (
@@ -56,14 +56,24 @@ const Profile = () => {
             <h2 className="text-2xl font-semibold mb-6 ">My Pins</h2>
           </div>
           <div className="columns-2 md:columns-3 lg:columns-4 gap-4">
-            {post?.post.image.map((post, index) => (
-              <img
-                key={index}
-                src={post}
-                alt="pin"
-                className="mb-4 rounded-2xl w-full"
-              />
-            ))}
+            {posts?.map((post) => {
+              return (
+                <div className="rounded-xl overflow-hidden shadow mb-3">
+                
+                    <img
+                    key={post._id}
+                    src={`http://localhost:8000/uploads/${post.image}`}
+                    alt={post.title}
+                    className="w-full"
+                  />
+
+                
+                  <div className="p-3">
+                    <h3 className="font-semibold">{post.title}</h3>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

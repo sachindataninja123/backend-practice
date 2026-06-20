@@ -6,6 +6,7 @@ import Register from "../pages/Register";
 import Profile from "../pages/Profile";
 import ProtectedRoute from "../components/ProtectedRoute";
 import CreatePost from "../pages/CreatePost";
+import SinglePostpage from "../pages/SinglePostpage";
 
 const Approutes = () => {
   return (
@@ -29,6 +30,8 @@ const Approutes = () => {
           </ProtectedRoute>
         }
       />
+
+      <Route path="/post/:id" element={<SinglePostpage />} />
     </Routes>
   );
 };

@@ -28,3 +28,8 @@ export const getAllPosts = async () => {
   const res = await api.get("/post/all");
   return res.data;
 };
+
+export const getSinglePost = async (id) => {
+  const res = await api.get(`/post/${id}`);
+  return res.data;
+};

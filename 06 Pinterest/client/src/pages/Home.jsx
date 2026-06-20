@@ -12,7 +12,7 @@ const Home = () => {
       {/* Feed */}
       <div className="p-4 columns-2 md:columns-3 lg:columns-5 gap-4">
         {posts.map((post) => (
-          <div key={post.id} className="mb-4 break-inside-avoid cursor-pointer">
+          <div key={post._id} className="mb-4 break-inside-avoid cursor-pointer">
             <PinCard post={post} />
           </div>
         ))}

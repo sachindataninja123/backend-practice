@@ -4,12 +4,12 @@ import { AuthContext } from "../context/AuthContext";
 import { PostContext } from "../context/PostContext";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
+import PinCard from "../components/PinCard";
 
 const Profile = () => {
   const { user, handleLogout } = useContext(AuthContext);
 
   const { myPosts } = useContext(PostContext);
-  
 
   if (!user) {
     return (
@@ -21,8 +21,8 @@ const Profile = () => {
 
   return (
     <>
-      <Navbar/>
-      <div className="max-w-6xl mx-auto px-4 py-10">
+      <Navbar />
+      <div className="w-full mx-auto px-4 py-10">
         <div className="flex flex-col items-center">
           <div className="w-32 h-32 rounded-full bg-red-500 flex items-center justify-center text-white text-5xl font-bold">
             {user.fullname?.charAt(0).toUpperCase()}
@@ -54,30 +54,16 @@ const Profile = () => {
 
         {/* User Pins */}
         <div className="mt-12">
-          <div className="flex items-center justify-start mb-5 gap-1">
+          <div className="flex px-4 items-center justify-start mb-5 gap-1">
             <h2 className="text-2xl font-semibold ">My Pins</h2>
             <p className="mt-0.5">({myPosts?.length})</p>
           </div>
-          <div className="columns-2 md:columns-3 lg:columns-4 gap-4">
-            {myPosts?.map((post) => {
-              return (
-                <div
-                  key={post._id}
-                  className="rounded-xl overflow-hidden shadow mb-3"
-                >
-                  <img
-                    key={post._id}
-                    src={`http://localhost:8000/uploads/${post.image}`}
-                    alt={post.title}
-                    className="w-full"
-                  />
-
-                  <div className="p-3">
-                    <h3 className="font-semibold">{post.title}</h3>
-                  </div>
-                </div>
-              );
-            })}
+          <div className="columns-2 md:columns-3 lg:columns-5 gap-4 px-4">
+            {myPosts?.map((post) => (
+              <div key={post._id} className="break-inside-avoid mb-4">
+                <PinCard post={post} />
+              </div>
+            ))}
           </div>
         </div>
       </div>

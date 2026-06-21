@@ -33,3 +33,13 @@ export const getSinglePost = async (id) => {
   const res = await api.get(`/post/${id}`);
   return res.data;
 };
+
+export const savePost = async (postId) => {
+  const res = await api.post(`/post/save/${postId}`);
+  return res.data;
+};
+
+export const deletePost = async (postId) => {
+  const res = await api.post(`/post/delete/${postId}`);
+  return res.data;
+};

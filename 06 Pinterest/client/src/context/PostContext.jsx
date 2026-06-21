@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { createContext } from "react";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   createPost,
+  deletePost,
   getAllPosts,
   getMyPosts,
+  savePost,
 } from "../services/postService";
 
 export const PostContext = createContext();
@@ -15,7 +17,10 @@ const PostProvider = ({ children }) => {
   const [posts, setPosts] = useState([]);
   const [myPosts, setMyPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [savePosts, setSavePosts] = useState([]);
   const navigate = useNavigate();
+
+  const { postId } = useParams();
 
   const handleCreatePost = async (formData) => {
     try {
@@ -46,6 +51,24 @@ const PostProvider = ({ children }) => {
     fetchMyPosts();
   }, []);
 
+  const handleSavePost = async () => {
+    try {
+      const data = await savePost(postId);
+      setSavePosts(data.posts);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDeletePost = async () => {
+    try {
+      const data = await deletePost(postId);
+      setMyPosts(data.posts);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <PostContext.Provider
       value={{
@@ -55,6 +78,10 @@ const PostProvider = ({ children }) => {
         setMyPosts,
         handleCreatePost,
         loading,
+        handleDeletePost,
+        handleSavePost,
+        savePosts,
+        setSavePosts
       }}
     >
       {children}

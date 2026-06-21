@@ -95,4 +95,55 @@ const getSinglePost = async (req, res) => {
   }
 };
 
-module.exports = { createPostController, getMyPosts, getAllPosts , getSinglePost };
+const savePostController = async (req, res) => {
+  const userId = req.user.id;
+  const { postId } = req.params;
+
+  const user = await userModel.findById(userId);
+
+  if (user.savedPosts.includes(postId)) {
+    return res.status(400).json({
+      success: false,
+      message: "Post already saved",
+    });
+  }
+
+  user.savedPosts.push(postId);
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+    message: "Post saved successfully",
+  });
+};
+
+const deletePostController = async (req, res) => {
+  const userId = req.user.id;
+  const { postId } = req.params;
+
+  const post = await Post.findById(postId);
+
+  if (!post) {
+    return res.status(404).json({
+      success: false,
+      message: "Post not found",
+    });
+  }
+
+  // Check ownership
+  if (post.user.toString() !== userId) {
+    return res.status(403).json({
+      success: false,
+      message: "You can only delete your own posts",
+    });
+  }
+
+  await Post.findByIdAndDelete(postId);
+
+  res.status(200).json({
+    success: true,
+    message: "Post deleted successfully",
+  });
+};
+
+module.exports = { createPostController, getMyPosts, getAllPosts , getSinglePost, savePostController , deletePostController };

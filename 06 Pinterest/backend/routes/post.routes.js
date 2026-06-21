@@ -6,6 +6,8 @@ const {
   getAllPosts,
   getMyPosts,
   getSinglePost,
+  savePostController,
+  deletePostController,
 } = require("../controllers/post.controller");
 
 const postRouter = express.Router();
@@ -20,5 +22,8 @@ postRouter.post(
 postRouter.get("/all", getAllPosts);
 postRouter.get("/mypost", isAuth, getMyPosts);
 postRouter.get("/:id", getSinglePost);
+
+postRouter.post("/save/:postId", isAuth, savePostController);
+postRouter.delete("/delete/:postId", isAuth, deletePostController);
 
 module.exports = postRouter;

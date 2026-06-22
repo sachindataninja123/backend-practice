@@ -13,6 +13,7 @@ My backend development practice projects built with Node.js, Express, MongoDB, A
 | 03 | [Chess](#03-chess) | Chess game with backend logic |
 | 04 | [Noteskeeper](#04-noteskeeper) | Notes app with protected CRUD routes |
 | 05 | [URL Shortner](#05-url-shortner) | Full-stack URL shortener with frontend integration |
+| 05 | [Pinterest Clone](#06-Pinterest-Clone) | Full-stack Pinterest with frontend integration |
 
 ---
 
@@ -83,6 +84,21 @@ A full-stack URL shortener — paste a long URL, get a short one. Frontend integ
 
 ---
 
+## 06 Pinterest Clone
+
+A full-stack Pinterest-inspired image sharing platform with secure authentication, post management, and save functionality.
+
+
+**Features**
+- Authentication — Register and login with JWT-based auth
+- Access & Refresh Tokens — Silent token refresh on expiry, no forced logouts
+- Upload Posts — Share images with title and description
+- Delete Posts — Remove your own posts
+- Save Posts — Bookmark posts from other users
+- User Profile — View your posts and saved collection
+
+**Tech:** Node.js , Express, MongoDB, Mongoose, React, Context API
+
 ## Getting Started
 
 Each project lives in its own folder. To run any project:
@@ -125,5 +141,5 @@ JWT_SECRET=your_jwt_secret_key
 
 ## Author
 
-**Sachin Kush** — [sachindataninja123](https://github.com/sachindataninja123)
+**Sachin Kushwaha** — [sachindataninja123](https://github.com/sachindataninja123)
 

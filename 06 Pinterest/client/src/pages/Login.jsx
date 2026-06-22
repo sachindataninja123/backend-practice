@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../context/AuthContext";
+import { FaHome } from "react-icons/fa";
+import { FaArrowLeftLong } from "react-icons/fa6";
+
+
+
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -32,7 +37,12 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4 relative">
+     <div className="absolute  top-15 left-20">
+       <Link className="flex items-center justify-center gap-2 bg-red-500 px-3 py-2 rounded-full" to="/">
+     <FaHome size={22} className="text-white" /> <FaArrowLeftLong size={22} className="text-gray-200"/>
+       </Link>
+     </div>
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
         <h1 className="text-3xl font-bold text-center mb-2">Welcome Back</h1>
 

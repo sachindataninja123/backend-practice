@@ -9,7 +9,8 @@ import PinCard from "../components/PinCard";
 const Profile = () => {
   const { user, handleLogout } = useContext(AuthContext);
 
-  const { myPosts, handleDeletePost, handleSavePost } = useContext(PostContext);
+  const { myPosts, handleDeletePost, handleSavePost, search } =
+    useContext(PostContext);
 
   if (!user) {
     return (
@@ -18,6 +19,15 @@ const Profile = () => {
       </div>
     );
   }
+
+  const filteredPosts = myPosts.filter((post) => {
+    const query = search.toLowerCase();
+
+    return (
+      post.title?.toLowerCase().includes(query) ||
+      post.description?.toLowerCase().includes(query)
+    );
+  });
 
   return (
     <>
@@ -58,18 +68,32 @@ const Profile = () => {
             <h2 className="text-2xl font-semibold ">My Pins</h2>
             <p className="mt-0.5">({myPosts?.length})</p>
           </div>
+
+          {myPosts.length === 0 && (
+            <div className="flex items-center justify-center">
+              <h4 className="font-semibold">
+                No pins yet! Create your first pin.
+              </h4>
+            </div>
+          )}
+
           <div className="columns-2 md:columns-3 lg:columns-5 gap-4 px-4">
-            {myPosts?.map((post) => (
-              <div key={post._id} className="break-inside-avoid mb-4">
-                <PinCard
-                  post={post}
-                  showSave={true}
-                  showDelete={true}
-                  onSave={handleSavePost}
-                  onDelete={handleDeletePost}
-                />
+            {filteredPosts?.length > 0 ? (
+              filteredPosts.map((post) => (
+                <div key={post._id} className="break-inside-avoid mb-4">
+                  <PinCard
+                    post={post}
+                    showSave={false}
+                    showDelete={true}
+                    onDelete={handleDeletePost}
+                  />
+                </div>
+              ))
+            ) : (
+              <div className="col-span-full text-center py-20 text-gray-500">
+                <h3 className="text-lg font-semibold">No pins found.</h3>
               </div>
-            ))}
+            )}
           </div>
         </div>
       </div>

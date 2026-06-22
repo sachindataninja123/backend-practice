@@ -27,10 +27,13 @@ const Navbar = () => {
 
   const { user, handleLogout } = useContext(AuthContext);
 
-
   return (
     <nav className="flex justify-between items-center px-10 py-4 shadow">
-      <Link to="/" className="text-2xl font-bold text-red-500">
+      <Link
+        to="/"
+        onClick={() => setSearch("")}
+        className="text-2xl font-bold text-red-500"
+      >
         Pinterest
       </Link>
       <div className="relative">
@@ -61,6 +64,7 @@ const Navbar = () => {
         <div className="flex items-center justify-center gap-10">
           <NavLink
             to="/"
+            onClick={() => setSearch("")}
             className={({ isActive }) =>
               `text-[15px] font-semibold tracking-wide transition-all duration-200 ${
                 isActive
@@ -87,6 +91,7 @@ const Navbar = () => {
 
           <NavLink
             to="/saved-posts"
+            onClick={() => setSearch("")}
             className={({ isActive }) =>
               `text-[15px] font-semibold tracking-wide transition-all duration-200 ${
                 isActive
@@ -135,7 +140,10 @@ const Navbar = () => {
                   <div className="p-2">
                     <Link
                       to="/profile"
-                      onClick={() => setOpen(false)}
+                      onClick={() => {
+                        setOpen(false);
+                        setSearch("");
+                      }}
                       className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors"
                     >
                       <FaUser /> <span>Profile</span>

@@ -87,8 +87,8 @@ const PostProvider = ({ children }) => {
         handleSavePost,
         savePosts,
         setSavePosts,
-        search , 
-        setSearch
+        search,
+        setSearch,
       }}
     >
       {children}

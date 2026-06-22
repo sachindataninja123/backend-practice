@@ -38,7 +38,6 @@ const AuthProvider = ({ children }) => {
       const data = await loginUser(formData);
       setUser(data);
 
-      localStorage.setItem("token", data.accessToken);
       toast.success(data?.message);
 
       navigate("/");

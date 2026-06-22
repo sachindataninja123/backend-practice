@@ -7,38 +7,22 @@ export const registerUser = async (data) => {
 
 export const loginUser = async (data) => {
   const res = await api.post("/user/login", data);
+  localStorage.setItem("token", res.data.accessToken); 
   return res.data;
 };
 
 export const getCurrentUser = async () => {
-  const token = localStorage.getItem("token");
-
-  const res = await api.get("/user/profile", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
+  const res = await api.get("/user/profile");
   return res.data;
 };
 
 export const logoutUser = async () => {
-  const token = localStorage.getItem("token");
-  const res = await api.get("/user/logout", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
+  const res = await api.get("/user/logout");
+  localStorage.removeItem("token"); 
   return res.data;
 };
 
 export const getSavedPosts = async () => {
-  const token = localStorage.getItem("token");
-
-  const res = await api.get("/user/saved-posts", {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-
+  const res = await api.get("/user/saved-posts");
   return res.data;
 };

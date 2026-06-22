@@ -4,9 +4,13 @@ import axios from "axios";
 import { PostContext } from "../context/PostContext";
 import { getSinglePost } from "../services/postService";
 import Navbar from "../components/Navbar";
+import SinglePin from "../components/SinglePin";
+import { AuthContext } from "../context/AuthContext";
 
 const SinglePostpage = () => {
   const { id } = useParams();
+  const { user } = useContext(AuthContext);
+  const { handleSavePost, handleDeletePost } = useContext(PostContext);
 
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -47,31 +51,13 @@ const SinglePostpage = () => {
     <>
       <Navbar />
       <div className="max-w-4xl mx-auto p-5">
-        <div className="bg-white shadow-md rounded-xl overflow-hidden">
-          {post.image && (
-            <img
-              src={`http://localhost:8000/uploads/${post.image}`}
-              alt={post.title}
-              className="w-full h-112.5 object-cover"
-            />
-          )}
-
-          <div className="p-6">
-            <h1 className="text-3xl font-bold mb-3">{post.title}</h1>
-
-            <p className="text-gray-600 mb-4">
-              Posted by{" "}
-              <span className="font-semibold">{post.user?.fullname}</span>
-            </p>
-
-            <p className="text-gray-800 leading-relaxed">{post.description}</p>
-
-            <div className="mt-6 flex items-center gap-4 text-sm text-gray-500">
-              <span>❤️ {post.likes?.length || 0} Likes</span>
-              <span>💬 {post.comments?.length || 0} Comments</span>
-            </div>
-          </div>
-        </div>
+        <SinglePin
+          post={post}
+          showSave={!!user}
+          showDelete={user?._id === post.user._id}
+          onSave={handleSavePost}
+          onDelete={handleDeletePost}
+        />
       </div>
     </>
   );

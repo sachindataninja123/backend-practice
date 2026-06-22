@@ -69,14 +69,6 @@ const Profile = () => {
             <p className="mt-0.5">({myPosts?.length})</p>
           </div>
 
-          {myPosts.length === 0 && (
-            <div className="flex items-center justify-center">
-              <h4 className="font-semibold">
-                No pins yet! Create your first pin.
-              </h4>
-            </div>
-          )}
-
           <div className="columns-2 md:columns-3 lg:columns-5 gap-4 px-4">
             {filteredPosts?.length > 0 ? (
               filteredPosts.map((post) => (

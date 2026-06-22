@@ -7,6 +7,7 @@ import { FaUser, FaPlus, FaSignOutAlt } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { PostContext } from "../context/PostContext";
 
+
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -179,11 +180,11 @@ const Navbar = () => {
                     </h3>
                   </div>
 
-                  <div className="space-y-2">
+                  <div className="flex flex-col gap-2">
                     <Link
                       to="/login"
                       onClick={() => setOpen(false)}
-                      className="block w-full text-center bg-red-500 text-white py-2 rounded-xl font-medium hover:bg-red-600 transition-all duration-200"
+                      className="block w-[90%] m-auto text-center bg-red-500 text-white py-2 rounded-full font-medium hover:bg-red-600 transition-all duration-200"
                     >
                       Login
                     </Link>
@@ -191,7 +192,7 @@ const Navbar = () => {
                     <Link
                       to="/register"
                       onClick={() => setOpen(false)}
-                      className="block w-full text-center border border-gray-300 py-2 rounded-xl font-medium hover:bg-gray-50 transition-all duration-200"
+                      className="block w-[90%] m-auto text-center border border-gray-300 py-2 rounded-full font-medium hover:bg-gray-50 transition-all duration-200"
                     >
                       Create Account
                     </Link>

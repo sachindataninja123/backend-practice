@@ -24,15 +24,13 @@ const SavedPosts = () => {
       <div className="max-w-full mx-auto px-4 py-8">
         <h1 className="text-2xl font-semibold px-3 mb-8">Saved Posts</h1>
 
-        {savedPosts.length === 0 && (
+        {savedPosts.length === 0 ? (
           <div className="text-center text-gray-500 mt-20">
             No saved posts yet.
           </div>
-        )}
-
-        {filteredPosts.length === 0 ? (
+        ) : filteredPosts.length === 0 ? (
           <div className="text-center text-gray-500 mt-20">
-            No posts found.
+            No posts found for "{search}".
           </div>
         ) : (
           <div className="columns-2 md:columns-3 lg:columns-5 gap-4 space-y-4">

@@ -18,6 +18,7 @@ const PostProvider = ({ children }) => {
   const [myPosts, setMyPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [savePosts, setSavePosts] = useState([]);
+  const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
   const { postId } = useParams();
@@ -25,7 +26,7 @@ const PostProvider = ({ children }) => {
   const handleCreatePost = async (formData) => {
     try {
       const data = await createPost(formData);
-      setPosts((prev) => [data.post, ...prev]); // add new post to top
+      setPosts((prev) => [data.post, ...prev]);
       toast.success(data?.message);
       navigate("/profile");
     } catch (error) {
@@ -51,21 +52,25 @@ const PostProvider = ({ children }) => {
     fetchMyPosts();
   }, []);
 
-  const handleSavePost = async () => {
+  const handleSavePost = async (postId) => {
     try {
       const data = await savePost(postId);
       setSavePosts(data.posts);
+      toast.success(data?.message);
     } catch (error) {
       console.log(error);
+      toast.error(error.response?.data?.message || "Post save failed");
     }
   };
 
-  const handleDeletePost = async () => {
+  const handleDeletePost = async (postId) => {
     try {
       const data = await deletePost(postId);
       setMyPosts(data.posts);
+      toast.success(data?.message);
     } catch (error) {
       console.log(error);
+      toast.error(error.response?.data?.message || "Post deletion failed");
     }
   };
 
@@ -81,7 +86,9 @@ const PostProvider = ({ children }) => {
         handleDeletePost,
         handleSavePost,
         savePosts,
-        setSavePosts
+        setSavePosts,
+        search , 
+        setSearch
       }}
     >
       {children}

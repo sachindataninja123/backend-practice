@@ -121,7 +121,7 @@ const deletePostController = async (req, res) => {
   const userId = req.user.id;
   const { postId } = req.params;
 
-  const post = await Post.findById(postId);
+  const post = await postModel.findById(postId);
 
   if (!post) {
     return res.status(404).json({
@@ -138,7 +138,7 @@ const deletePostController = async (req, res) => {
     });
   }
 
-  await Post.findByIdAndDelete(postId);
+  await postModel.findByIdAndDelete(postId);
 
   res.status(200).json({
     success: true,

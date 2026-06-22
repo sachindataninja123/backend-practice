@@ -4,10 +4,14 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { FaUser, FaPlus, FaSignOutAlt } from "react-icons/fa";
+import { NavLink } from "react-router-dom";
+import { PostContext } from "../context/PostContext";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
+
+  const { search, setSearch } = useContext(PostContext);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -23,30 +27,76 @@ const Navbar = () => {
 
   const { user, handleLogout } = useContext(AuthContext);
 
+
   return (
     <nav className="flex justify-between items-center px-10 py-4 shadow">
       <Link to="/" className="text-2xl font-bold text-red-500">
         Pinterest
       </Link>
-      <input
-        type="text"
-        placeholder="Search..."
-        className="border rounded-full px-4 py-2 w-125"
-      />
+      <div className="relative">
+        <input
+          type="text"
+          placeholder="Search pins..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="w-125 rounded-full bg-gray-100 px-5 py-3 border border-red-300 pl-12 outline-none focus:ring-2 focus:ring-red-400"
+        />
+
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M21 21l-4.35-4.35M11 18a7 7 0 100-14 7 7 0 000 14z"
+          />
+        </svg>
+      </div>
       <div className="flex items-center justify-center gap-10">
         <div className="flex items-center justify-center gap-10">
-          <Link
-            className="font-medium hover:text-red-500 transition-all duration-150"
+          <NavLink
             to="/"
+            className={({ isActive }) =>
+              `text-[15px] font-semibold tracking-wide transition-all duration-200 ${
+                isActive
+                  ? "text-red-500 border-b-2 border-red-500 pb-1"
+                  : "text-gray-700 hover:text-red-500"
+              }`
+            }
           >
             Feed
-          </Link>
-          <Link
+          </NavLink>
+
+          <NavLink
             to="/add-post"
-            className="font-medium hover:text-red-500 transition-all duration-150 cursor-pointer"
+            className={({ isActive }) =>
+              `text-[15px] font-semibold tracking-wide transition-all duration-200 ${
+                isActive
+                  ? "text-red-500 border-b-2 border-red-500 pb-1"
+                  : "text-gray-700 hover:text-red-500"
+              }`
+            }
           >
             Create Post
-          </Link>
+          </NavLink>
+
+          <NavLink
+            to="/saved-posts"
+            className={({ isActive }) =>
+              `text-[15px] font-semibold tracking-wide transition-all duration-200 ${
+                isActive
+                  ? "text-red-500 border-b-2 border-red-500 pb-1"
+                  : "text-gray-700 hover:text-red-500"
+              }`
+            }
+          >
+            Saved Posts
+          </NavLink>
         </div>
 
         <div className="relative" ref={dropdownRef}>

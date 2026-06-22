@@ -32,3 +32,13 @@ export const logoutUser = async () => {
 
   return res.data;
 };
+
+export const getSavedPosts = async () => {
+  const token = localStorage.getItem("token");
+
+  const res = await api.get("/user/saved-posts", {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  return res.data;
+};

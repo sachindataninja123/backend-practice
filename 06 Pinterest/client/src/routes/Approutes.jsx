@@ -7,6 +7,7 @@ import Profile from "../pages/Profile";
 import ProtectedRoute from "../components/ProtectedRoute";
 import CreatePost from "../pages/CreatePost";
 import SinglePostpage from "../pages/SinglePostpage";
+import SavedPosts from "../pages/SavedPosts";
 
 const Approutes = () => {
   return (
@@ -32,6 +33,15 @@ const Approutes = () => {
       />
 
       <Route path="/post/:id" element={<SinglePostpage />} />
+      
+      <Route
+        path="/saved-posts"
+        element={
+          <ProtectedRoute>
+            <SavedPosts />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 };

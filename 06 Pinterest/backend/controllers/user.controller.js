@@ -151,10 +151,25 @@ const logoutController = async (req, res) => {
   }
 };
 
+const getSavedPostsController = async (req, res) => {
+  try {
+    const user = await userModel.findById(req.user.id).populate("savedPosts");
+
+    res.status(200).json({
+      success: true,
+      savedPosts: user.savedPosts,
+    });
+
+  } catch (error) {
+    return res.status(500).json({ message: error.message, success: false });
+  }
+};
+
 module.exports = {
   registerController,
   loginController,
   getMeController,
   refreshTokenController,
   logoutController,
+  getSavedPostsController
 };

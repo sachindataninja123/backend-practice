@@ -9,7 +9,7 @@ import PinCard from "../components/PinCard";
 const Profile = () => {
   const { user, handleLogout } = useContext(AuthContext);
 
-  const { myPosts } = useContext(PostContext);
+  const { myPosts, handleDeletePost, handleSavePost } = useContext(PostContext);
 
   if (!user) {
     return (
@@ -36,7 +36,7 @@ const Profile = () => {
 
           <p className="mt-2 text-gray-600">{user.email}</p>
 
-          <div className="flex justify-center items-center gap-5 mt-6">
+          <div className="flex justify-center items-center gap-5 mt-3">
             <Link
               to="/add-post"
               className="mt-3 bg-black cursor-pointer text-white px-6 py-2 rounded-full"
@@ -61,7 +61,13 @@ const Profile = () => {
           <div className="columns-2 md:columns-3 lg:columns-5 gap-4 px-4">
             {myPosts?.map((post) => (
               <div key={post._id} className="break-inside-avoid mb-4">
-                <PinCard post={post} />
+                <PinCard
+                  post={post}
+                  showSave={true}
+                  showDelete={true}
+                  onSave={handleSavePost}
+                  onDelete={handleDeletePost}
+                />
               </div>
             ))}
           </div>

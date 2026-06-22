@@ -5,6 +5,7 @@ const {
   getMeController,
   refreshTokenController,
   logoutController,
+  getSavedPostsController,
 } = require("../controllers/user.controller");
 const isAuth = require("../middlewares/isAuth.middleware");
 
@@ -15,5 +16,6 @@ userRouter.post("/login", loginController);
 userRouter.get("/profile", isAuth, getMeController);
 userRouter.get("/refreshToken", refreshTokenController);
 userRouter.get("/logout", isAuth, logoutController);
+userRouter.get("/saved-posts", isAuth, getSavedPostsController);
 
 module.exports = userRouter;

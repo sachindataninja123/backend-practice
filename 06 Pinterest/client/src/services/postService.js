@@ -35,11 +35,27 @@ export const getSinglePost = async (id) => {
 };
 
 export const savePost = async (postId) => {
-  const res = await api.post(`/post/save/${postId}`);
+  const token = localStorage.getItem("token");
+
+  const res = await api.post(
+    `/post/save/${postId}`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
   return res.data;
 };
 
 export const deletePost = async (postId) => {
-  const res = await api.post(`/post/delete/${postId}`);
+  const token = localStorage.getItem("token");
+
+  const res = await api.delete(`/post/delete/${postId}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
   return res.data;
 };
+

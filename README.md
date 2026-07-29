@@ -100,6 +100,24 @@ A full-stack Pinterest-inspired image sharing platform with secure authenticatio
 
 **Tech:** Node.js , Express, MongoDB, Mongoose, React, Context API
 
+---
+
+##  EJS Practice
+
+A hands-on EJS practice project built with Express.js to learn server-side rendering, dynamic routing, and template engines by creating interactive web pages.
+
+Features
+
+* Dynamic routing with URL parameters
+* Server-side rendering using EJS
+* Pass data from Express to EJS templates
+* Render dynamic user/profile pages
+* Display data from JSON files
+* Reusable EJS templates and layouts
+* Basic error handling for invalid routes
+
+Tech: Node.js, Express.js, EJS, HTML, CSS, JavaScript
+
 ## Getting Started
 
 Each project lives in its own folder. To run any project:

@@ -1,14 +1,16 @@
 const express = require("express");
 const path = require("path");
-const posts = require("./data");
+let posts = require("./data");
 const { v4: uuidv4 } = require("uuid");
 uuidv4();
+const methodOverride = require("method-override");
 
 const app = express();
 const PORT = 8000;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(methodOverride("_method"));
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -48,7 +50,14 @@ app.patch("/posts/:id/edit", (req, res) => {
   const newContent = req.body.content;
   const post = posts.find((p) => id === p.id);
   post.content = newContent;
-  res.render("edit.ejs", { post });
+  res.redirect("/posts");
+});
+
+app.delete("/posts/:id", (req, res) => {
+  console.log("DELETE route hit");
+  const { id } = req.params;
+  posts = posts.filter((p) => p.id !== id);
+  res.redirect("/posts");
 });
 
 app.listen(PORT, () => {

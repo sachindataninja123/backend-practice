@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All posts</title>
+</head>
+<body>
+    <h1>Quora POSTS</h1>
+    <a href="/posts/new">Create post</a>
+
+    <% data.forEach(post => { %>
+
+  <div style="border:1px solid #ccc; padding:10px; margin:10px;">
+
+    <h3>@<%= post.username %></h3>
+
+    <p><%= post.content %></p>
+
+  </div>
+
+<% }) %>
+
+
+</body>
+</html>

@@ -13,7 +13,8 @@ My backend development practice projects built with Node.js, Express, MongoDB, A
 | 03 | [Chess](#03-chess) | Chess game with backend logic |
 | 04 | [Noteskeeper](#04-noteskeeper) | Notes app with protected CRUD routes |
 | 05 | [URL Shortner](#05-url-shortner) | Full-stack URL shortener with frontend integration |
-| 05 | [Pinterest Clone](#06-Pinterest-Clone) | Full-stack Pinterest with frontend integration |
+| 05 | [Pinterest Clone](#06-Pinterest-Clone) | Full-stack Pinterest with frontend integration 
+| [EJS Practice](#EJS-Practice) | Ejs practice with dummy data and different files
 
 ---
 
@@ -45,7 +46,7 @@ Extends the basic auth system with Role-Based Access Control — different users
 ---
 
 ## 03 Chess
-
+|
 A chess game with backend logic for move validation and game state management.
 
 **Features**

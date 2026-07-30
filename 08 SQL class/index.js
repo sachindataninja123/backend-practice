@@ -1,4 +1,5 @@
-const { faker } = require("@faker-js/faker");const mysql = require("mysql2");
+const { faker } = require("@faker-js/faker");
+const mysql = require("mysql2");
 require("dotenv").config();
 
 // Create the connection to database
@@ -9,14 +10,26 @@ const connection = mysql.createConnection({
   password: process.env.DB_PASSWORD,
 });
 
+const q =
+  "INSERT INTO user(id , username , email , password) VALUES ?";
+let users = [
+  ["1234", "123_new_Userb", "newUserb@gmail.com", "12345678b"],
+  ["1235", "123_new_Userc", "newUserc@gmail.com", "12345678c"],
+];
+
 try {
-  connection.query("SHOW TABLES", (err, result) => {
+  connection.query(q, [users], (err, result) => {
     if (err) throw err;
     console.log(result);
+    // console.log(result.length);
+    // console.log(result[0]);
+    // console.log(result[1]);
   });
 } catch (error) {
   console.log(error);
 }
+
+connection.end();
 
 const getRandomUser = () => {
   return {

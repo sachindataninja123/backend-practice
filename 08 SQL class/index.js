@@ -1,14 +1,15 @@
-const { faker } = require("@faker-js/faker");
-const mysql = require("mysql2");
-require("dotenv").config();
 const express = require("express");
-const path = require("path");
+const mysql = require("mysql2");
+const methodOverride = require("method-override");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 8000;
+
+app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
 
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "/views"));
 
 // Create the connection to database
 const connection = mysql.createConnection({
@@ -31,50 +32,57 @@ app.get("/", (req, res) => {
   }
 });
 
+// Show all users
 app.get("/users", (req, res) => {
   const q = "SELECT * FROM user";
-  try {
-    connection.query(q, (err, result) => {
-      if (err) throw err;
-      console.log(result)
-      res.render("users.ejs", { users: result });
+
+  connection.query(q, (err, users) => {
+    if (err) {
+      console.log(err);
+      return res.send("Database Error");
+    }
+
+    res.render("users.ejs", { users });
+  });
+});
+
+// Edit page
+app.get("/users/:id/edit", (req, res) => {
+  const { id } = req.params;
+
+  const q = "SELECT * FROM user WHERE id=?";
+
+  connection.query(q, [id], (err, results) => {
+    if (err) {
+      console.log(err);
+      return res.send("Database Error");
+    }
+
+    res.render("edit.ejs", {
+      user: results[0],
     });
-  } catch (error) {
-    console.log(error);
-  }
+  });
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+// Update username
+app.patch("/users/:id", (req, res) => {
+  const { id } = req.params;
+  const { username } = req.body;
+
+  const q = "UPDATE user SET username=? WHERE id=?";
+
+  connection.query(q, [username, id], (err, result) => {
+    if (err) {
+      console.log(err);
+      return res.send("Database Error");
+    }
+
+    console.log(result);
+
+    res.redirect("/users");
+  });
 });
 
-// try {
-//   connection.query(q, [data], (err, result) => {
-//     if (err) throw err;
-//     console.log(result);
-//     // console.log(result.length);
-//     // console.log(result[0]);
-//     // console.log(result[1]);
-//   });
-// } catch (error) {
-//   console.log(error);
-// }
-
-// connection.end();
-
-// const getRandomUser = () => {
-//   return [
-//     faker.string.uuid(),
-//     faker.internet.username(),
-//     faker.internet.email(),
-//     faker.internet.password(),
-//   ];
-// };
-
-// const q = "INSERT INTO user(id , username , email , password) VALUES ?";
-
-// const data = [];
-
-// for (let i = 1; i <= 100; i++) {
-//   data.push(getRandomUser()); //100 fake users
-// }
+app.listen(8000, () => {
+  console.log("Server running on port 8000");
+});

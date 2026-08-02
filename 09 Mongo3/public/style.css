@@ -82,6 +82,26 @@ button {
   cursor: pointer;
   margin-bottom: 10px;
 }
+
+.delButton {
+  padding: 10px 25px;
+  background-color: red;
+  text-decoration: none;
+  outline: none;
+  color: white;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
 button:active {
   transform: scale(95);
+}
+
+.actionbtn {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 8px;
 }

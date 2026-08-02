@@ -69,7 +69,15 @@ app.patch("/chats/:id", async (req, res) => {
     { runValidators: true },
     { new: true },
   );
-  
+
+  res.redirect("/chats");
+});
+
+//update Route
+app.delete("/chats/:id/delete", async (req, res) => {
+  const { id } = req.params;
+  await Chat.findByIdAndDelete(id);
+
   res.redirect("/chats");
 });
 

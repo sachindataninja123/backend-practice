@@ -5,74 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Chats</title>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        body {
-            background: #f4f7fb;
-            padding: 40px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 30px;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: auto;
-        }
-
-        .chat-card {
-            background: #fff;
-            border-left: 6px solid #4f46e5;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-        }
-
-        .chat-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.12);
-        }
-
-        .from {
-            color: #2563eb;
-            font-weight: bold;
-            font-size: 18px;
-        }
-
-        .to {
-            color: #16a34a;
-            font-weight: bold;
-        }
-
-        .message {
-            background: #eef2ff;
-            padding: 14px;
-            border-radius: 8px;
-            margin: 15px 0;
-            color: #444;
-            line-height: 1.6;
-        }
-
-        .label {
-            color: #666;
-            font-weight: bold;
-        }
-    </style>
+   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
     <h1>💬 All Chats</h1>
+
+    <form method="GET" action="/chats/new">
+        <button>New Chat</button>
+    </form>
 
     <div class="container">
 
@@ -87,12 +28,19 @@
 
                 <div class="message">
                     <%= chat.message %>
+                    <form action="/chats/<%=chat._id  %>/edit" method="GET">
+                        <button>
+                            Edit
+                        </button>
+                    </form>
                 </div>
 
                 <p>
                     <span class="label">To:</span>
                     <span class="to"><%= chat.to %></span>
                 </p>
+                <p class="time"><%= chat.created_at.toString().split(" ")[4]  %></p>
+                 <p class="date"><%= chat.created_at.toString().split(" ").slice(0,4).join("-")  %></p>
 
             </div>
 

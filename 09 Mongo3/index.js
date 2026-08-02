@@ -9,6 +9,8 @@ const PORT = 8000;
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
+app.use(express.static(path.join(__dirname, "public")));
+app.use(express.urlencoded({ extended: true }));
 
 main()
   .then((res) => {
@@ -28,6 +30,24 @@ app.get("/", async (req, res) => {
 app.get("/chats", async (req, res) => {
   const chats = await Chat.find();
   res.render("chats.ejs", { chats });
+});
+
+// new route
+app.get("/chats/new", (req, res) => {
+  res.render("new.ejs");
+});
+
+//create Routes
+app.post("/chats", async (req, res) => {
+  let { to, from, message } = req.body;
+  let newChat = new Chat({
+    from: from,
+    to: to,
+    message: message,
+    created_at: new Date(),
+  });
+  await newChat.save();
+  res.redirect("/chats");
 });
 
 app.listen(PORT, () => {

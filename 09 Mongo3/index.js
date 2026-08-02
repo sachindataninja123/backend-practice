@@ -20,22 +20,14 @@ async function main() {
   await mongoose.connect("mongodb://127.0.0.1:27017/whatsapp");
 }
 
-let chat1 = new Chat({
-  from: "Neha",
-  to: "Priya",
-  message: "Send me your exam sheets",
-  created_at: new Date(),
+app.get("/", async (req, res) => {
+  res.send("server is connected!");
 });
 
-chat1
-  .save()
-  .then((res) => {
-    console.log(res);
-  })
-  .catch((err) => console.log(err));
-
-app.get("/", (req, res) => {
-  res.send("server is connected!");
+//index route
+app.get("/chats", async (req, res) => {
+  const chats = await Chat.find();
+  res.render("chats.ejs", { chats });
 });
 
 app.listen(PORT, () => {

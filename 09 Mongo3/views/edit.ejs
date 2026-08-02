@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Chat</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      body {
+        background: #f4f7fb;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .container {
+        width: 500px;
+        background: #fff;
+        padding: 35px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 10px;
+      }
+
+      .chat-id {
+        text-align: center;
+        color: #777;
+        font-size: 14px;
+        margin-bottom: 25px;
+      }
+
+      label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #444;
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #dcdcdc;
+        border-radius: 8px;
+        font-size: 15px;
+        margin-bottom: 18px;
+        outline: none;
+        transition: 0.3s;
+      }
+
+      input:focus,
+      textarea:focus {
+        border-color: #4f46e5;
+        box-shadow: 0 0 8px rgba(79, 70, 229, 0.2);
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 120px;
+      }
+
+      button {
+        width: 100%;
+        padding: 14px;
+        background: #4f46e5;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      button:hover {
+        background: #4338ca;
+      }
+
+      .back-btn {
+        display: inline-block;
+        margin-top: 18px;
+        text-decoration: none;
+        color: #4f46e5;
+        font-weight: bold;
+      }
+
+      .back-btn:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>✏️ Edit Chat</h1>
+      <p class="chat-id">Chat ID: <%= chat._id %></p>
+
+      <label>From</label>
+      <input type="text" name="from" value="<%= chat.from %>" disabled />
+
+      <label>To</label>
+      <input type="text" name="to" value="<%= chat.to %>" required disabled />
+
+      <form action="/chats/<%= chat._id %>?_method=PATCH" method="POST">
+
+        <label>Message</label>
+        <textarea name="message" required><%= chat.message %></textarea>
+
+        <button type="submit">💾 Update Chat</button>
+      </form>
+
+      <a href="/chats" class="back-btn">← Back to Chats</a>
+    </div>
+  </body>
+</html>

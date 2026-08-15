@@ -4,13 +4,14 @@ import connectoDB from "./db/db.js";
 import User from "./models/user.model.js";
 dotenv.config();
 import { Redis } from "ioredis";
+import rateLimitter from "./middleware/ratelimit.middleware.js";
 
 const PORT = process.env.PORT || 5000;
 
 const app = express();
 app.use(express.json());
 
-const redis = new Redis(process.env.REDIS_URL);
+export const redis = new Redis(process.env.REDIS_URL);
 
 connectoDB();
 
@@ -31,7 +32,7 @@ app.post("/create", async (req, res) => {
   return res.status(200).json(user);
 });
 
-app.get("/users", async (req, res) => {
+app.get("/users", rateLimitter, async (req, res) => {
   const user = await User.find({});
 
   return res.status(200).json(user);

@@ -5,6 +5,8 @@ import User from "./models/user.model.js";
 dotenv.config();
 import { Redis } from "ioredis";
 import rateLimitter from "./middleware/ratelimit.middleware.js";
+import sendEmail from "./utils/sendEmail.js";
+import emailQueue from "./queue.js";
 
 const PORT = process.env.PORT || 5000;
 
@@ -29,6 +31,8 @@ app.post("/create", async (req, res) => {
     phone,
   });
 
+  await emailQueue.add("send-email", { email });
+  
   return res.status(200).json(user);
 });
 

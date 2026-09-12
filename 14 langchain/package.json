@@ -13,6 +13,8 @@
   "type": "module",
   "dependencies": {
     "@google/genai": "^2.18.0",
+    "@langchain/core": "^1.2.11",
+    "@langchain/google-genai": "^2.3.2",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "nodemon": "^3.1.14"

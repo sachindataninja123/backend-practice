@@ -1,13 +1,17 @@
 import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
-
-import { ChatGroq } from "@langchain/groq"
+import { ChatGroq } from "@langchain/groq";
+import {
+  Annotation,
+  MessagesAnnotation,
+  StateGraph,
+} from "@langchain/langgraph";
+import { ToolNode } from "@langchain/langgraph/prebuilt";
 
 const app = express();
 const PORT = process.env.PORT || 8000;
 app.use(express.json());
-
 
 const llm = new ChatGroq({
   model: "openai/gpt-oss-120b",
@@ -16,8 +20,11 @@ const llm = new ChatGroq({
   maxRetries: 2,
 });
 
-app.post("/ai", async (req, res) => {
-  const { input } = req.body;
+const tools = [];
+const toolNode = new ToolNode(tools);
+
+const invokeLLM = async (state) => {
+  console.log("state is : ", state);
 
   const response = await llm.invoke([
     {
@@ -27,12 +34,41 @@ app.post("/ai", async (req, res) => {
     },
     {
       role: "human",
-      content: input,
+      content: state.messages[0].content,
     },
   ]);
 
+  return { messages: [response] };
+};
+
+const shouldContinue = async (state) => {
+  const lastMessage = state.messages[state.messages.length - 1];
+
+  if (lastMessage.tool_calls.length > 0) {
+    return "tools";
+  } else {
+    return "__end__";
+  }
+};
+
+const graph = new StateGraph(MessagesAnnotation)
+  .addNode("agent", invokeLLM)
+  .addNode("tools", toolNode)
+  .addEdge("__start__", "agent")
+  .addEdge("tools", "agent")
+  .addConditionalEdges("agent", shouldContinue)
+  .compile();
+
+app.post("/ai", async (req, res) => {
+  const { input } = req.body;
+
+  const response = await graph.invoke({
+    messages: [{ role: "user", content: input }],
+  });
+  console.log(response);
+
   return res.status(200).json({
-    "AI:": response.content,
+    "AI:": response.messages[response.messages.length - 1].content,
   });
 });
 

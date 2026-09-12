@@ -4,24 +4,33 @@ import express from "express";
 import { ChatGroq } from "@langchain/groq";
 import {
   Annotation,
+  MemorySaver,
   MessagesAnnotation,
   StateGraph,
 } from "@langchain/langgraph";
 import { ToolNode } from "@langchain/langgraph/prebuilt";
+import { TavilySearch } from "@langchain/tavily";
 
 const app = express();
 const PORT = process.env.PORT || 8000;
 app.use(express.json());
+
+const tool = new TavilySearch({
+  maxResults: 5,
+  topic: "general",
+});
+
+const checkPointer = new MemorySaver();
+
+const tools = [tool];
+const toolNode = new ToolNode(tools);
 
 const llm = new ChatGroq({
   model: "openai/gpt-oss-120b",
   temperature: 0.7,
   maxTokens: 100,
   maxRetries: 2,
-});
-
-const tools = [];
-const toolNode = new ToolNode(tools);
+}).bindTools(tools);
 
 const invokeLLM = async (state) => {
   console.log("state is : ", state);
@@ -29,13 +38,15 @@ const invokeLLM = async (state) => {
   const response = await llm.invoke([
     {
       role: "system",
-      content:
-        "you are a assistant and your name is jarvis. if you don,t know the answer then don't give incorrect answer",
+      content: `you are jarvis AI assistant 
+        Use conversation memory first.
+        
+        Only use tools when the answer requires external real-time information like: weather, news, web search, stock prices etc. 
+        
+        Do Not call tools for simple conversation memory-based questions, greetings, or personal context
+        `,
     },
-    {
-      role: "human",
-      content: state.messages[0].content,
-    },
+    ...state.messages,
   ]);
 
   return { messages: [response] };
@@ -57,18 +68,22 @@ const graph = new StateGraph(MessagesAnnotation)
   .addEdge("__start__", "agent")
   .addEdge("tools", "agent")
   .addConditionalEdges("agent", shouldContinue)
-  .compile();
+  .compile({ checkpointer: checkPointer });
 
 app.post("/ai", async (req, res) => {
   const { input } = req.body;
 
-  const response = await graph.invoke({
-    messages: [{ role: "user", content: input }],
-  });
+  const response = await graph.invoke(
+    {
+      messages: [{ role: "user", content: input }],
+    },
+    { configurable: { thread_id: "user123" } },
+  );
+
   console.log(response);
 
   return res.status(200).json({
-    "AI:": response.messages[response.messages.length - 1].content,
+    "AI:": response,
   });
 });
 

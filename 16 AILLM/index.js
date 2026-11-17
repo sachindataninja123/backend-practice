@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 dotenv.config();
 import { GoogleGenAI } from "@google/genai";
 
+import { ChatGoogle } from "@langchain/google";
+
 const app = express();
 app.use(express.json());
 const PORT = process.env.PORT || 8000;
@@ -36,17 +38,32 @@ const ai = new GoogleGenAI({
 
 // main();
 
-app.post("/test-gemini", async (req, res) => {
-  const { prompt } = req.body;
+// app.post("/test-gemini", async (req, res) => {
+//   const { prompt } = req.body;
 
-  const response = await ai.interactions.create({
-    model: "gemini-3.5-flash-lite",
-    input: prompt,
-  });
+//   const response = await ai.interactions.create({
+//     model: "gemini-3.5-flash-lite",
+//     input: prompt,
+//   });
+
+//   res.status(200).json({
+//     success: true,
+//     data: response.output_text,
+//   });
+// });
+
+// BY LANGCHAIN
+
+
+app.post("/chat", async (req, res) => {
+  const { prompt } = req.body;
+  const model = new ChatGoogle("gemini-3.5-flash-lite");
+
+  const response = await model.invoke(prompt);
 
   res.status(200).json({
     success: true,
-    data: response.output_text,
+    data: response.content,
   });
 });
 
